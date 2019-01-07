@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <mat-select placeholder="Days" formControlName="Day">
+            <mat-select placeholder="Day" formControlName="Day">
               <mat-option *ngFor="let day of days" [value]="day.name">
                 {{ day.name }}
               </mat-option>
@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="Date" formControlName="Date" placeholder="Date Work Started">
+            <input matInput [matDatepicker]="Date" formControlName="Date" placeholder="Date">
             <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
             <mat-datepicker touchUi #Date></mat-datepicker>
           </mat-form-field>

@@ -36,7 +36,7 @@
   <div class="accordiondiv" *ngFor="let item of daily | async; trackBy: trackByFn" [id]="item.$key">
     <mat-card class="cardtitle">
       <mat-card-header>
-        <mat-icon mat-card-avatar color="primary">assignment</mat-icon>
+        <mat-icon mat-card-avatar class="carIcon" color="primary">assignment</mat-icon>
         <mat-card-title>{{ item.Day }}
             <button mat-icon-button class="more-button" [matMenuTriggerFor]="menud" aria-label="Select Month">
                 <mat-icon>more_vert</mat-icon>
@@ -52,6 +52,7 @@
                 </button>
               </mat-menu>
         </mat-card-title>
+        <mat-card-subtitle><span class="bold">Date: </span>{{ item.Date.toDate() | date: 'mediumDate' }}</mat-card-subtitle>
         <mat-card-subtitle><span class="bold">Accomplished: </span>{{ item.Accomplished }}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
@@ -93,7 +94,7 @@
 
   </div>
 
-  <button mat-fab color="primary" (click)="addReport()" class="addbutton">
+  <button mat-fab color="accent" (click)="addReport()" class="addbutton">
     <mat-icon aria-label="Add A Daily Report">add</mat-icon>
   </button>
 </div>

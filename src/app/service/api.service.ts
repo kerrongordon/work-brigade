@@ -20,7 +20,7 @@ export class ApiService {
 
   getListOfDailyReport(Id: String) {
     return this.afs.collection<Daily>('Daily', ref =>
-      ref.where('id', '==', Id).orderBy('timestamp', 'asc')
+      ref.where('id', '==', Id).orderBy('Date', 'asc')
     );
   }
 

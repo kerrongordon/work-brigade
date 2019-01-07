@@ -5,6 +5,7 @@ import { months } from '../service/months';
 import { constituencies } from '../service/constituencies';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { typeOfWork } from '../service/typeofwork';
 
 @Component({
   selector: 'kgp-monthly-form',
@@ -17,7 +18,7 @@ export class MonthlyFormComponent implements OnInit {
     Year: [null, Validators.required],
     Constituency: [null, Validators.required],
     BeneficiaryName: [null, Validators.required],
-    WorkToBeDone: null,
+    WorkToBeDone: [null, Validators.required],
     DateWorkStarted: null,
     DateWorkCompleted: null,
     ChallengesFaced: null,
@@ -30,6 +31,7 @@ export class MonthlyFormComponent implements OnInit {
   });
 
   months = months;
+  typeOfWork = typeOfWork;
   constituencies = constituencies;
   year: any[];
 
@@ -43,11 +45,11 @@ export class MonthlyFormComponent implements OnInit {
     return this.local.back();
   }
 
-  onSubmit() {
+  async onSubmit() {
     if (!this.MonthForm.valid) { return; }
     const timestamp = new Date();
-    return this.api.addMonthlyReport({ 'timestamp': timestamp, ...this.MonthForm.value})
-      .then(clear => this.MonthForm.reset())
-      .then(goback => this.route.navigate(['']));
+    await this.api.addMonthlyReport({ 'timestamp': timestamp, ...this.MonthForm.value});
+    this.MonthForm.reset();
+    return this.route.navigate(['']);
   }
 }
