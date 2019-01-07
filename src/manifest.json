@@ -1,7 +1,7 @@
 {
-  "name": "brigade",
-  "short_name": "brigade",
-  "theme_color": "#1976d2",
+  "name": "Work brigade",
+  "short_name": "workbrigade",
+  "theme_color": "#9c27b0",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",

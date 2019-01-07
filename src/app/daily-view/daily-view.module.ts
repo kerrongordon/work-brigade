@@ -8,8 +8,12 @@ import {
   MatDividerModule,
   MatIconModule,
   MatMenuModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatExpansionModule,
+  MatBottomSheetModule
 } from '@angular/material';
+import { DeleteFormModule } from '../component/delete-form/delete-form.module';
+import { DeleteFormComponent } from '../component/delete-form/delete-form.component';
 
 const route: Routes = [{ path: '', component: DailyViewComponent }];
 
@@ -22,8 +26,12 @@ const route: Routes = [{ path: '', component: DailyViewComponent }];
     MatDividerModule,
     MatIconModule,
     MatMenuModule,
+    MatExpansionModule,
     MatProgressSpinnerModule,
+    MatBottomSheetModule,
+    DeleteFormModule,
     RouterModule.forChild(route)
-  ]
+  ],
+  entryComponents: [DeleteFormComponent]
 })
 export class DailyViewModule {}

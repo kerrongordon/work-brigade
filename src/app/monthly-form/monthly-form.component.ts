@@ -4,6 +4,7 @@ import { ApiService } from '../service/api.service';
 import { months } from '../service/months';
 import { constituencies } from '../service/constituencies';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'kgp-monthly-form',
@@ -32,10 +33,14 @@ export class MonthlyFormComponent implements OnInit {
   constituencies = constituencies;
   year: any[];
 
-  constructor(private fb: FormBuilder, private api: ApiService, private route: Router) {}
+  constructor(private fb: FormBuilder, private api: ApiService, private route: Router, private local: Location) {}
 
   ngOnInit() {
     this.year = this.api.yearsList(2018);
+  }
+
+  close() {
+    return this.local.back();
   }
 
   onSubmit() {

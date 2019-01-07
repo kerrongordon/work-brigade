@@ -5,11 +5,13 @@ import { map } from 'rxjs/operators';
 import { Daily } from '../interface/daily';
 import { Observable } from 'rxjs';
 import { Monthly } from '../interface/monthly';
+import { MatBottomSheet } from '@angular/material';
+import { DeleteFormComponent } from '../component/delete-form/delete-form.component';
 
 @Component({
   selector: 'kgp-daily-view',
   templateUrl: './daily-view.component.html',
-  styleUrls: ['./daily-view.component.sass']
+  styleUrls: ['./daily-view.component.sass'],
 })
 export class DailyViewComponent implements OnInit {
   id: string;
@@ -17,7 +19,11 @@ export class DailyViewComponent implements OnInit {
   Monthly: Monthly;
   isLoading = true;
 
-  constructor(private aroute: ActivatedRoute, private route: Router, private api: ApiService) { }
+  constructor(
+    private aroute: ActivatedRoute,
+    private route: Router,
+    private api: ApiService,
+    private bottomSheet: MatBottomSheet) { }
 
   ngOnInit() {
     this.id = this.aroute.snapshot.paramMap.get('id');
@@ -37,6 +43,30 @@ export class DailyViewComponent implements OnInit {
 
   addReport() {
     return this.route.navigate(['dailyform', this.id]);
+  }
+
+  trackByFn(index, item) {
+    return item.$key;
+  }
+
+  deleteMonthPrompt() {
+    return this.bottomSheet.open(DeleteFormComponent)
+      .afterDismissed()
+      .subscribe(data => {
+        if (data) { this.deletlMonth(); }
+      });
+  }
+
+  deleteDayPrompt(id: String) {
+    return this.bottomSheet.open(DeleteFormComponent)
+      .afterDismissed()
+      .subscribe(data => {
+        if (data) { this.deletlDay(id); }
+      });
+  }
+
+  deletlDay(id: String) {
+    return this.api.deleteDailyReport(id);
   }
 
   deletlMonth() {

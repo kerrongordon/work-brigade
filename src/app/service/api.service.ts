@@ -26,7 +26,7 @@ export class ApiService {
 
   getListOfMonthlyReportForDashBoard(month: String, Year: number) {
     return this.afs.collection<Monthly>('Monthly', ref =>
-      ref.where('Month', '==', month).where('Year', '==', Year)
+      ref.where('Month', '==', month).where('Year', '==', Year).orderBy('timestamp', 'asc')
     );
   }
 
