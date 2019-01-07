@@ -1,0 +1,43 @@
+<div class="grid-container" *ngIf="!loading; else isloading">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Monthly Report
+        <button mat-icon-button class="more-buttony" [matMenuTriggerFor]="menuy" aria-label="Select Month">
+          <mat-icon>date_range</mat-icon>
+        </button>
+        <mat-menu #menuy="matMenu" xPosition="before">
+          <button mat-menu-item *ngFor="let itemy of YearList" (click)="selectYear(itemy)">{{itemy}}</button>
+        </mat-menu>
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Select Month">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item *ngFor="let month of months" (click)="selectAMonth(month.name)">{{month.name}}</button>
+        </mat-menu>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+      <mat-list *ngIf="monthlyLength != null">
+        <mat-list-item [id]="item.$key" *ngFor="let item of monthly | async; last as last" (click)="openDailyReport(item.$key)">
+          <h4 mat-line><span class="bold">Beneficiary Name:</span> {{ item.BeneficiaryName }}</h4>
+          <p mat-line><span class="bold">Month:</span> {{ item.Month }} {{item.Year}}</p>
+          <p mat-line><span class="bold">Work To Be Done:</span> {{ item.WorkToBeDone }}</p>
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-list-item>
+      </mat-list>
+      <div *ngIf="monthlyLength == 0" class="noData">
+        <h2>No Data</h2>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <button mat-fab color="primary" (click)="addReport()" class="addbutton">
+    <mat-icon aria-label="Add A Monthly Report">add</mat-icon>
+  </button>
+</div>
+
+<ng-template #isloading>
+  <div class="isloadingPage" >
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

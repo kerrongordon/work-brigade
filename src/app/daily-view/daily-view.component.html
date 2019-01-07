@@ -1,0 +1,55 @@
+<div class="grid-container" *ngIf="!isLoading; else isloading">
+  <mat-card [id]="Monthly.$key">
+    <mat-card-header>
+      <mat-card-title>Beneficiary Name: {{ Monthly.BeneficiaryName }}
+
+        <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Select Month">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="deletlMonth()">Delete</button>
+        </mat-menu>
+      </mat-card-title>
+      <mat-card-subtitle><span class="bold">Address:</span> {{ Monthly.Address }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Contact:</span> {{ Monthly.Contact }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Type Of Work:</span> {{ Monthly.WorkToBeDone }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Constituency:</span> {{ Monthly.Constituency }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Date Project Started:</span> {{ Monthly.DateWorkStarted.toDate() | date:
+        'mediumDate' }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Date Project Ended:</span> {{ Monthly.DateWorkCompleted.toDate() | date:
+        'mediumDate' }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Coordinator's Name:</span> {{ Monthly.CoordinatorName }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Housing Coordinator:</span> {{ Monthly.HousingCoordinator }}</mat-card-subtitle>
+      <mat-card-subtitle><span class="bold">Date Material Were Delivered:</span> {{
+        Monthly.DateMaterialWereDelivered.toDate() | date: 'mediumDate' }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+
+<mat-card *ngFor="let item of daily | async">
+  <mat-card-header>
+    <mat-icon mat-card-avatar color="primary">assignment</mat-icon>
+    <mat-card-title>{{ item.Day }}</mat-card-title>
+    <mat-card-subtitle><span class="bold">Accomplished: </span>{{ item.Accomplished }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p *ngIf="item.MaterialUse"><span class="bold">Material Use: </span>{{ item.MaterialUse }}</p>
+    <mat-divider *ngIf="item.PlannedActivities"></mat-divider>
+    <p *ngIf="item.PlannedActivities"><span class="bold">Planned Activities: </span>{{ item.PlannedActivities }}</p>
+    <mat-divider *ngIf="item.Results"></mat-divider>
+    <p *ngIf="item.Results"><span class="bold">Results: </span>{{ item.Results }}</p>
+    <mat-divider *ngIf="item.Challenges"></mat-divider>
+    <p *ngIf="item.Challenges"><span class="bold">Challenges: </span>{{ item.Challenges }}</p>
+  </mat-card-content>
+</mat-card>
+
+<button mat-fab color="primary" (click)="addReport()" class="addbutton">
+  <mat-icon aria-label="Add A Daily Report">add</mat-icon>
+</button>
+</div>
+
+<ng-template #isloading>
+  <div class="isloadingPage" >
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>

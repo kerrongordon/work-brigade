@@ -1,0 +1,159 @@
+<form [formGroup]="MonthForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Dashboard</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Constituency" formControlName="Constituency">
+              <mat-option *ngFor="let constituency of constituencies" [value]="constituency.name">
+                {{ constituency.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="MonthForm.controls['Constituency'].hasError('required')">
+              Constituency is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Month" formControlName="Month">
+              <mat-option *ngFor="let month of months" [value]="month.name">
+                {{ month.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="MonthForm.controls['Month'].hasError('required')">
+              Month is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Beneficiary Name" formControlName="BeneficiaryName">
+            <mat-error *ngIf="MonthForm.controls['BeneficiaryName'].hasError('required')">
+              Beneficiary Name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Address" formControlName="Address">
+            <mat-error *ngIf="MonthForm.controls['Address'].hasError('required')">
+              Address is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Contact" formControlName="Contact">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="DateMaterialWereDelivered" formControlName="DateMaterialWereDelivered"
+              placeholder="Date Material Were Delivered">
+            <mat-datepicker-toggle matSuffix [for]="DateMaterialWereDelivered"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #DateMaterialWereDelivered></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Coordinator's Name" formControlName="CoordinatorName">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Housing Coordinator" formControlName="HousingCoordinator">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="DateWorkStarted" formControlName="DateWorkStarted" placeholder="Date Work Started">
+            <mat-datepicker-toggle matSuffix [for]="DateWorkStarted"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #DateWorkStarted></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="DateWorkCompleted" formControlName="DateWorkCompleted" placeholder="Date Work Completed">
+            <mat-datepicker-toggle matSuffix [for]="DateWorkCompleted"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #DateWorkCompleted></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-select placeholder="Year" formControlName="Year">
+                <mat-option *ngFor="let item of year" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="MonthForm.controls['Year'].hasError('required')">
+                  Year is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Work To Be Done" formControlName="WorkToBeDone"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Challenges Faced" formControlName="ChallengesFaced"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="What Was Done To Mitigate Challenges" formControlName="WhatWasDoneToMitigateChallenges"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

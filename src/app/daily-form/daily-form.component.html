@@ -1,0 +1,92 @@
+<form [formGroup]="dailyForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Shipping Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Days" formControlName="Day">
+              <mat-option *ngFor="let day of days" [value]="day.name">
+                {{ day.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="dailyForm.controls['Day'].hasError('required')">
+              Day is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput type="number" min="1" placeholder="Qty" formControlName="Qty">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Material Use" formControlName="MaterialUse"></textarea>
+            <mat-error *ngIf="dailyForm.controls['MaterialUse'].hasError('required')">
+              Material Use is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Planned Activities" formControlName="PlannedActivities"></textarea>
+            <mat-error *ngIf="dailyForm.controls['PlannedActivities'].hasError('required')">
+              Planned Activities is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <section class="example-section">
+            <label>Accomplished:</label>
+            <mat-radio-group formControlName="Accomplished">
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </section>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Results" formControlName="Results"></textarea>
+            <mat-error *ngIf="dailyForm.controls['Results'].hasError('required')">
+              Results is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Challenges" formControlName="Challenges"></textarea>
+            <mat-error *ngIf="dailyForm.controls['Challenges'].hasError('required')">
+              Challenges is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
