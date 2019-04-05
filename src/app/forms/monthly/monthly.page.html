@@ -1,0 +1,76 @@
+<ion-header no-border>
+  <ion-toolbar color="primary" text-center>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add New Beneficiary</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="primary" padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+
+        <form #form="ngForm" (ngSubmit)="register(form)">
+
+          <ion-item>
+            <ion-label position="floating">Beneficiary Name</ion-label>
+            <ion-input name="name" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Address</ion-label>
+            <ion-input name="address" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input name="phoneNumber" ngModel></ion-input>
+          </ion-item>
+
+
+          <div padding></div>
+          <div padding></div>
+
+          <ion-item>
+            <ion-label>Constituency</ion-label>
+            <ion-select interface="action-sheet" placeholder="Select One" name="constituency" ngModel required>
+              <ion-select-option *ngFor="let const of constituencies" [value]="const.abbreviation">{{ const.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Starting Date</ion-label>
+            <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
+              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation" name="Date"
+              ngModel required>
+            </ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Type Of Work</ion-label>
+            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel required>
+              <ion-select-option *ngFor="let type of typeOfWork" [value]="type.title">{{ type.title }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div padding></div>
+
+          <div padding-vertical>
+            <ion-button size="large" [disabled]="form.invalid" type="submit" expand="block">Submit</ion-button>
+          </div>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+</ion-content>
