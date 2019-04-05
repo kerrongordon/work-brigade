@@ -69,6 +69,10 @@ export class DailyViewComponent implements OnInit {
     return this.api.deleteDailyReport(id);
   }
 
+  editMonth(isEdit: Boolean) {
+    return this.route.navigate(['monthlyform', {id: this.id, isedit: isEdit}]);
+  }
+
   deletlMonth() {
     const ids = this.api.getListOfDailyReport(this.id).snapshotChanges()
       .pipe( map( arr => arr.map(snap => snap.payload.doc.id) ) );

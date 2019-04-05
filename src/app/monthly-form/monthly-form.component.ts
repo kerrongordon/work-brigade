@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../service/api.service';
 import { months } from '../service/months';
 import { constituencies } from '../service/constituencies';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { typeOfWork } from '../service/typeofwork';
 
@@ -34,11 +34,49 @@ export class MonthlyFormComponent implements OnInit {
   typeOfWork = typeOfWork;
   constituencies = constituencies;
   year: any[];
+  isedit: string;
+  iseditId: string;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private route: Router, private local: Location) {}
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private route: Router,
+    private local: Location,
+    private arout: ActivatedRoute) {}
 
   ngOnInit() {
     this.year = this.api.yearsList(2018);
+
+    this.isEdit();
+  }
+
+  isEdit() {
+    this.isedit = this.arout.snapshot.paramMap.get('isedit');
+    this.iseditId = this.arout.snapshot.paramMap.get('id');
+
+    if (this.isedit === null) { return; }
+
+    return this.api.getOneMonthlyReport(this.iseditId).valueChanges()
+      .subscribe(data => {
+        this.MonthForm = this.fb.group({
+          Month: [data.Month, Validators.required],
+          Year: [data.Year, Validators.required],
+          Constituency: [data.Constituency, Validators.required],
+          BeneficiaryName: [data.BeneficiaryName, Validators.required],
+          WorkToBeDone: [data.WorkToBeDone, Validators.required],
+          DateWorkStarted: data.DateWorkStarted,
+          DateWorkCompleted: data.DateWorkCompleted,
+          ChallengesFaced: data.ChallengesFaced,
+          WhatWasDoneToMitigateChallenges: data.WhatWasDoneToMitigateChallenges,
+          Address: [data.Address, Validators.required],
+          Contact: data.Contact,
+          DateMaterialWereDelivered:  data.DateMaterialWereDelivered,
+          CoordinatorName: data.CoordinatorName,
+          HousingCoordinator: data.HousingCoordinator,
+        });
+
+        console.log(this.MonthForm);
+      });
   }
 
   close() {
