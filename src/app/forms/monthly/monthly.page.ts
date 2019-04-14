@@ -4,6 +4,7 @@ import { typeOfWork } from 'src/app/export/typeOfWork';
 import { ToastController } from '@ionic/angular';
 import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 import { constituencies } from 'src/app/export/constituencies';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-monthly',
@@ -18,13 +19,21 @@ export class MonthlyPage implements OnInit {
 
   typeOfWork = typeOfWork;
   constituencies = constituencies;
+  pageType: string;
 
   constructor(
     private datesService: DatesService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private beneficiaryService: BeneficiaryService) { }
 
   ngOnInit() {
+
+    this.pageType = this.activatedRoute.snapshot.paramMap.get('id');
+
+    console.log(this.pageType);
+
     this.monthNames = this.datesService.getMonthName();
     this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
     this.dayNames = this.datesService.getDayName();
@@ -37,7 +46,8 @@ export class MonthlyPage implements OnInit {
       return await this.presentToastRegister('Please Fill Out The Form Completely');
     }
 
-    return await this.beneficiaryService.registerBeneficiary(form.value);
+    await this.beneficiaryService.registerBeneficiary(form.value);
+    return this.router.navigate(['home']);
   }
 
   async presentToastRegister(infor) {

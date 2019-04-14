@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { constituencies } from 'src/app/export/constituencies';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
+  constituencies = constituencies;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  settings(data) {
+    return console.log(data);
   }
 
 }

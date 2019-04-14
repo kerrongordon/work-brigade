@@ -1,9 +1,9 @@
 <ion-header no-border>
-  <ion-toolbar color="primary" text-center>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Add New Beneficiary</ion-title>
+    <ion-title>Add Beneficiary</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -35,17 +35,17 @@
           <div padding></div>
 
           <ion-item>
-            <ion-label>Constituency</ion-label>
-            <ion-select interface="action-sheet" placeholder="Select One" name="constituency" ngModel required>
-              <ion-select-option *ngFor="let const of constituencies" [value]="const.abbreviation">{{ const.name }}
-              </ion-select-option>
-            </ion-select>
+            <ion-label>Start Date</ion-label>
+            <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
+              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation" name="startDate"
+              ngModel required>
+            </ion-datetime>
           </ion-item>
 
-          <ion-item>
-            <ion-label>Starting Date</ion-label>
+          <ion-item *ngIf="pageType != 'add'">
+            <ion-label>End Date</ion-label>
             <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
-              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation" name="Date"
+              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation" name="endDate"
               ngModel required>
             </ion-datetime>
           </ion-item>
@@ -61,7 +61,7 @@
           <div padding></div>
 
           <div padding-vertical>
-            <ion-button size="large" [disabled]="form.invalid" type="submit" expand="block">Submit</ion-button>
+            <ion-button size="large" [disabled]="form.invalid" type="submit" expand="block">Add</ion-button>
           </div>
 
         </form>
@@ -69,8 +69,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
-
-
 
 </ion-content>
