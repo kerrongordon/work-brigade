@@ -1,9 +1,39 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>settings</ion-title>
+<ion-header no-border>
+  <ion-toolbar color="primary" text-center>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="primary" padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+
+        <form #form="ngForm" (ngSubmit)="settings(form)">
+
+
+          <ion-item>
+            <ion-label>Constituency</ion-label>
+            <ion-select interface="action-sheet" placeholder="Select One" name="constituency" ngModel required>
+              <ion-select-option *ngFor="let const of constituencies" [value]="const.abbreviation">{{ const.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <div padding></div>
+
+          <div padding-vertical>
+            <ion-button size="large" [disabled]="form.invalid" type="submit" expand="block">Save</ion-button>
+          </div>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

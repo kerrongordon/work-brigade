@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeneficiaryService {
 
-  constructor() { }
-
+  constructor(private afs: AngularFirestore) {}
 
   registerBeneficiary(data) {
-    return console.log(data);
+    return this.afs.collection<Beneficiary>('Beneficiary').add(data);
+  }
+
+  editBeneficiary() {
+
+  }
+
+  loadBeneficiary() {
+    return this.afs.collection<Beneficiary>('Beneficiary', ref => {
+      return ref.orderBy('startDate');
+    }).snapshotChanges()
+    .pipe(map(arr => arr.map(snap => ( { $key: snap.payload.doc.id, ...snap.payload.doc.data() } ))));
   }
 }
