@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'addbeneficiary/:id', loadChildren: './forms/monthly/monthly.module#MonthlyPageModule' },
   { path: 'daily', loadChildren: './forms/daily/daily.module#DailyPageModule' },
   { path: 'settings', loadChildren: './forms/settings/settings.module#SettingsPageModule' },
-  { path: 'dailyview', loadChildren: './page/daily/daily.module#DailyPageModule' },
+  { path: 'dailyview/:id', loadChildren: './page/daily/daily.module#DailyPageModule' },
 ];
 
 @NgModule({

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DatesService } from 'src/app/service/forms/dates.service';
 import { typeOfWork } from 'src/app/export/typeOfWork';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 import { constituencies } from 'src/app/export/constituencies';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-monthly',
@@ -20,10 +21,13 @@ export class MonthlyPage implements OnInit {
   typeOfWork = typeOfWork;
   constituencies = constituencies;
   pageType: string;
+  edd: string | any;
+  olddata: Observable<Beneficiary>;
 
   constructor(
     private datesService: DatesService,
     private router: Router,
+    private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private beneficiaryService: BeneficiaryService) { }
@@ -38,16 +42,33 @@ export class MonthlyPage implements OnInit {
     this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
     this.dayNames = this.datesService.getDayName();
     this.dayAbbreviation = this.datesService.getDayAbbreviation();
+
+    this.loadData(this.pageType);
   }
 
-  async register(form) {
+  loadData(id) {
+    if (id === 'add') { return; }
 
-    if (!form.valid || form.value.name.trim() === '' || form.value.address.trim() === '') {
-      return await this.presentToastRegister('Please Fill Out The Form Completely');
+    this.olddata = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
+  }
+
+  register(form) {
+
+    if (form.value.name.trim() === '' || form.value.address.trim() === '') {
+      return this.presentToastRegister('Please Fill Out The Form Completely');
     }
 
-    await this.beneficiaryService.registerBeneficiary(form.value);
-    return this.router.navigate(['home']);
+    const data: Beneficiary = form.value;
+
+    console.log(data);
+
+    if (this.pageType === 'add') {
+      this.beneficiaryService.registerBeneficiary(data);
+      return this.navCtrl.navigateBack('/home');
+    } else {
+      this.beneficiaryService.loadBeneficiaryById(this.pageType).update(data);
+      return this.navCtrl.navigateBack(['dailyview/', this.pageType]);
+    }
   }
 
   async presentToastRegister(infor) {

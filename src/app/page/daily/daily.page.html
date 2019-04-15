@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+    <ion-button slot="end" fill="clear" (click)="editBenef()">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -10,15 +13,15 @@
 
   <ion-card class="maincard">
     <div padding>
-      <h3>Kadie Nicholas</h3>
-      <p>New House</p>
+      <h3>{{ (data | async)?.name }}</h3>
+      <p>{{ (data | async)?.workType  }}</p>
     </div>
 
     <ion-card-content>
-      <p><b>Address:</b> River Sallee</p>
-      <p><b>Contact:</b> 420-7437</p>
+      <p><b>Address:</b> {{ (data | async)?.address  }}</p>
+      <p><b>Contact:</b> {{ (data | async)?.phoneNumber  }}</p>
       <p><b>Constituency:</b> St Patrick's East</p>
-      <p><b>Date Project Started:</b> Apr 2, 2019</p>
+      <p><b>Date Project Started:</b> {{ (data | async)?.startDate | date }}</p>
       <p><b>Date Project Ended:</b> Apr 9, 2019</p>
     </ion-card-content>
 
@@ -80,6 +83,8 @@
       </ion-item-sliding>
 
     </ion-card>
+
+
     
     
 

@@ -24,4 +24,8 @@ export class BeneficiaryService {
     }).snapshotChanges()
     .pipe(map(arr => arr.map(snap => ( { $key: snap.payload.doc.id, ...snap.payload.doc.data() } ))));
   }
+
+  loadBeneficiaryById(id: string) {
+    return this.afs.doc<Beneficiary>(`Beneficiary/${id}`);
+  }
 }

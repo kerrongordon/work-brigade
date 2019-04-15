@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import { ListItemComponent } from './list-item/list-item.component';
+import { SearchPipe } from '../pipe/search.pipe';
 
 @NgModule({
   imports: [
@@ -19,6 +19,6 @@ import { ListItemComponent } from './list-item/list-item.component';
       }
     ])
   ],
-  declarations: [HomePage, ListItemComponent],
+  declarations: [HomePage, SearchPipe],
 })
 export class HomePageModule {}

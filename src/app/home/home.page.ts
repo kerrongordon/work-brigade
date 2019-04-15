@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BeneficiaryService } from '../service/beneficiary.service';
-import { Observable } from 'rxjs';
 import { DatesService } from '../service/forms/dates.service';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,54 +11,35 @@ import { DatesService } from '../service/forms/dates.service';
 })
 export class HomePage implements OnInit {
 
+  dataDate: { date: string; items: Beneficiary[]; }[];
+  searchInput: string;
+  loadDataSub: Subscription;
+  filterargs: { title: string; };
   data: Observable<Beneficiary[]>;
-  monthNames: string[];
-  dataDate: { date: string; items: Beneficiary; }[];
 
   constructor(
     private router: Router,
-    private datesService: DatesService,
     private beneficiaryService: BeneficiaryService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.data = this.beneficiaryService.loadBeneficiary();
-    this.monthNames = this.datesService.getMonthName();
-    this.dataFilter(this.data);
+    this.loadDate();
   }
 
-  open() {
-    return this.router.navigate(['dailyview']);
+  open(key) {
+    return this.router.navigate(['dailyview/', key]);
   }
 
   addBeneficiary() {
     return this.router.navigate(['addbeneficiary/', 'add']);
   }
 
-  private dataFilter(data: Observable<Beneficiary[]>) {
-    data.subscribe(inf => {
-      inf.map(arr => arr);
-
-      const groups = inf.reduce( ( groups, item ) => {
-        const date = item.startDate.split('-', 2);
-        if (!groups[date]) {
-          groups[date] = [];
-        }
-        groups[date].push(item);
-        return groups;
-      }, {});
-
-      console.log(groups);
-
-
-      this.dataDate = Object.keys(groups).map((date) => {
-        return { date, items: groups[date] };
-      });
-
-      console.log(this.dataDate);
-
-    });
+  loadDate() {
+    return this.data = this.beneficiaryService.loadBeneficiary();
   }
 
+  onSearch($event) {
+    return this.searchInput = $event.target.value;
+  }
 
 }

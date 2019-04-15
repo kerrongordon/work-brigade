@@ -1,57 +1,60 @@
 <ion-header no-border>
-  <ion-toolbar text-center>
-    <ion-title>
-      Report
+  <ion-toolbar>
+    <ion-title >
+      Reports
     </ion-title>
+    <ion-button slot="end" fill="clear">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="onSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <!-- <ng-container *ngIf="dataDate?.length > 0; else nodata"> -->
 
+  <ion-list>
 
+    <ion-card class="month-item" *ngFor="let item of data | async | search:searchInput" margin-vertical>
 
-  <ion-item-group>
-
-
-    <ion-item-group *ngFor="let month of dataDate">
-      <ion-item-divider sticky class="home-item">
-        <ion-label>
-          {{ month.date | date: 'MMMM'}} {{ month.date | date: 'yyy'}}
-        </ion-label>
-      </ion-item-divider>
-
-
-      <ion-item-sliding *ngFor="let data of month.items">
-        <ion-item button (click)="open()" >
-            <ion-icon slot="start" name="filing" size="large"></ion-icon>
+      <ion-item-sliding>
+        <ion-item button (click)="open(item.$key)" lines="none" class="month-item">
+          <ion-icon slot="start" name="filing" size="large"></ion-icon>
           <ion-label text-wrap>
             <ion-text>
-              <h3>{{ data.name }}</h3>
+              <h3>{{ item.name }}</h3>
             </ion-text>
-              <p>{{ data.address }}</p>
-              <p>{{ data.startDate | date}}</p>
+            <p>{{ item.address }}</p>
+            <p>{{ item.startDate | date}}</p>
           </ion-label>
-          <ion-icon name="checkmark-circle" color="success" slot="end"></ion-icon>
+          <ion-icon name="checkmark-circle" [color]="item.completed ? 'success' : ''" slot="end"></ion-icon>
         </ion-item>
         <ion-item-options side="end">
           <ion-item-option onClick="unread(item)">Unread</ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
 
+    </ion-card>
 
-    </ion-item-group>
+  </ion-list>
+  <!-- </ng-container> -->
 
-
-  </ion-item-group>
-
-
-
-
+  <!-- <ng-template #nodata>
+    <div text-center class="nocontent">
+      <div>
+        <ion-icon name="time"></ion-icon>
+        <h3>No Schedule</h3>
+      </div>
+    </div>
+  </ng-template> -->
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addBeneficiary()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
 </ion-content>
