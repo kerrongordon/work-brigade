@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-// import { SearchPipe } from './pipe/search.pipe';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +21,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule.enablePersistence()
   ],
   providers: [
     StatusBar,

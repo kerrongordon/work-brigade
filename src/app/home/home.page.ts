@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { BeneficiaryService } from '../service/beneficiary.service';
-import { DatesService } from '../service/forms/dates.service';
 import { Subscription, Observable } from 'rxjs';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +16,11 @@ export class HomePage implements OnInit {
   filterargs: { title: string; };
   data: Observable<Beneficiary[]>;
 
+  search: Boolean = true;
+
   constructor(
-    private router: Router,
+    private navCtrl: NavController,
+    public alertController: AlertController,
     private beneficiaryService: BeneficiaryService
   ) { }
 
@@ -26,12 +28,20 @@ export class HomePage implements OnInit {
     this.loadDate();
   }
 
-  open(key) {
-    return this.router.navigate(['dailyview/', key]);
+  open(key: string) {
+    return this.navCtrl.navigateForward(['dailyview/', key]);
+  }
+
+  edit(key: string) {
+    return this.navCtrl.navigateForward(['addbeneficiary/', key]);
+  }
+
+  delete(key: string) {
+    return this.presentAlertConfirm(key);
   }
 
   addBeneficiary() {
-    return this.router.navigate(['addbeneficiary/', 'add']);
+    return this.navCtrl.navigateForward(['addbeneficiary/', 'add']);
   }
 
   loadDate() {
@@ -40,6 +50,32 @@ export class HomePage implements OnInit {
 
   onSearch($event) {
     return this.searchInput = $event.target.value;
+  }
+
+  deleteItem(key: string) {
+    return this.beneficiaryService.loadBeneficiaryById(key).delete();
+  }
+
+  async presentAlertConfirm(key: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are You Sure You Want To <strong>Delete</strong> This Item!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => { }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            this.deleteItem(key);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { SearchPipe } from '../pipe/search.pipe';
+import { ListItemComponent } from './list-item/list-item.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,10 @@ import { SearchPipe } from '../pipe/search.pipe';
       }
     ])
   ],
-  declarations: [HomePage, SearchPipe],
+  declarations: [
+    HomePage,
+    SearchPipe,
+    ListItemComponent
+  ],
 })
 export class HomePageModule {}

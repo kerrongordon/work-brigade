@@ -51,14 +51,15 @@
             </ion-datetime>
           </ion-item>
 
-          <ion-item *ngIf="pageType != 'add'" >
+          <ion-item *ngIf="pageType != 'add'">
             <ion-label>Completed</ion-label>
-            <ion-checkbox slot="start" name="completed" ngModel [value]="(olddata | async)?.completed"></ion-checkbox>
+            <ion-checkbox slot="start" name="completed" [ngModel]="(olddata | async)?.completed"></ion-checkbox>
           </ion-item>
 
           <ion-item>
             <ion-label>Type Of Work</ion-label>
-            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel required [value]="(olddata | async)?.workType">
+            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel required
+              [value]="(olddata | async)?.workType">
               <ion-select-option *ngFor="let type of typeOfWork" [value]="type.title">{{ type.title }}
               </ion-select-option>
             </ion-select>
@@ -67,7 +68,14 @@
           <div padding></div>
 
           <div padding-vertical>
-            <ion-button size="large" type="submit" expand="block">Add</ion-button>
+            <ion-button size="large" type="submit" expand="block">
+              <div *ngIf="!(olddata | async)">Add</div>
+              <div *ngIf="(olddata | async)">Save</div>
+            </ion-button>
+          </div>
+
+          <div padding-vertical>
+            <ion-button size="large" type="button" expand="block" (click)="goBack()">Cancel</ion-button>
           </div>
 
         </form>

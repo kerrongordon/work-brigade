@@ -33,23 +33,17 @@ export class MonthlyPage implements OnInit {
     private beneficiaryService: BeneficiaryService) { }
 
   ngOnInit() {
-
     this.pageType = this.activatedRoute.snapshot.paramMap.get('id');
-
-    console.log(this.pageType);
-
     this.monthNames = this.datesService.getMonthName();
     this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
     this.dayNames = this.datesService.getDayName();
     this.dayAbbreviation = this.datesService.getDayAbbreviation();
-
     this.loadData(this.pageType);
   }
 
   loadData(id) {
     if (id === 'add') { return; }
-
-    this.olddata = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
+    return this.olddata = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
   }
 
   register(form) {
@@ -60,15 +54,17 @@ export class MonthlyPage implements OnInit {
 
     const data: Beneficiary = form.value;
 
-    console.log(data);
-
     if (this.pageType === 'add') {
       this.beneficiaryService.registerBeneficiary(data);
-      return this.navCtrl.navigateBack('/home');
+      return this.navCtrl.pop();
     } else {
       this.beneficiaryService.loadBeneficiaryById(this.pageType).update(data);
-      return this.navCtrl.navigateBack(['dailyview/', this.pageType]);
+      return this.navCtrl.pop();
     }
+  }
+
+  goBack() {
+    return this.navCtrl.pop();
   }
 
   async presentToastRegister(infor) {
