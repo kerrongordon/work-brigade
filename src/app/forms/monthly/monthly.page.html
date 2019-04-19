@@ -18,12 +18,12 @@
 
           <ion-item>
             <ion-label position="floating">Beneficiary Name</ion-label>
-            <ion-input name="name" ngModel required [value]="(olddata | async)?.name"></ion-input>
+            <ion-input name="name" ngModel [value]="(olddata | async)?.name"></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Address</ion-label>
-            <ion-input name="address" ngModel required [value]="(olddata | async)?.address"></ion-input>
+            <ion-input name="address" ngModel [value]="(olddata | async)?.address"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -39,7 +39,7 @@
             <ion-label>Start Date</ion-label>
             <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
               [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation"
-              name="startDate" ngModel required [value]="(olddata | async)?.startDate">
+              name="startDate" ngModel [value]="(olddata | async)?.startDate">
             </ion-datetime>
           </ion-item>
 
@@ -47,7 +47,7 @@
             <ion-label>End Date</ion-label>
             <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
               [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation"
-              name="endDate" ngModel required [value]="(olddata | async)?.endDate">
+              name="endDate" ngModel [value]="(olddata | async)?.endDate">
             </ion-datetime>
           </ion-item>
 
@@ -58,7 +58,7 @@
 
           <ion-item>
             <ion-label>Type Of Work</ion-label>
-            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel required
+            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel
               [value]="(olddata | async)?.workType">
               <ion-select-option *ngFor="let type of typeOfWork" [value]="type.title">{{ type.title }}
               </ion-select-option>
@@ -68,14 +68,10 @@
           <div padding></div>
 
           <div padding-vertical>
-            <ion-button size="large" type="submit" expand="block">
+            <ion-button size="" type="submit" expand="block">
               <div *ngIf="!(olddata | async)">Add</div>
               <div *ngIf="(olddata | async)">Save</div>
             </ion-button>
-          </div>
-
-          <div padding-vertical>
-            <ion-button size="large" type="button" expand="block" (click)="goBack()">Cancel</ion-button>
           </div>
 
         </form>

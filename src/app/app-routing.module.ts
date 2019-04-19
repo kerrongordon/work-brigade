@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: 'home', loadChildren: './home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'addbeneficiary/:id', loadChildren: './forms/monthly/monthly.module#MonthlyPageModule' },
-  { path: 'daily', loadChildren: './forms/daily/daily.module#DailyPageModule' },
+  { path: 'dailyform/:id', loadChildren: './forms/daily/daily.module#DailyPageModule' },
   { path: 'settings', loadChildren: './forms/settings/settings.module#SettingsPageModule' },
   { path: 'dailyview/:id', loadChildren: './page/daily/daily.module#DailyPageModule' },
 ];

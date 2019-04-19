@@ -4,8 +4,9 @@ import { typeOfWork } from 'src/app/export/typeOfWork';
 import { ToastController, NavController } from '@ionic/angular';
 import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 import { constituencies } from 'src/app/export/constituencies';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { Beneficiary } from 'src/app/export/beneficiary';
 
 @Component({
   selector: 'app-monthly',
@@ -26,7 +27,6 @@ export class MonthlyPage implements OnInit {
 
   constructor(
     private datesService: DatesService,
-    private router: Router,
     private navCtrl: NavController,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
@@ -41,7 +41,7 @@ export class MonthlyPage implements OnInit {
     this.loadData(this.pageType);
   }
 
-  loadData(id) {
+  loadData(id: string) {
     if (id === 'add') { return; }
     return this.olddata = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
   }
@@ -56,10 +56,10 @@ export class MonthlyPage implements OnInit {
 
     if (this.pageType === 'add') {
       this.beneficiaryService.registerBeneficiary(data);
-      return this.navCtrl.pop();
+      return this.goBack();
     } else {
       this.beneficiaryService.loadBeneficiaryById(this.pageType).update(data);
-      return this.navCtrl.pop();
+      return this.goBack();
     }
   }
 

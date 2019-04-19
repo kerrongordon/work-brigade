@@ -1,9 +1,66 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar>
     <ion-title>daily</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+
+        <form #form="ngForm" (ngSubmit)="daily(form)">
+
+          <ion-item>
+            <ion-label>Date</ion-label>
+            <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
+              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation"
+              name="date" ngModel>
+            </ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Material Use</ion-label>
+            <ion-textarea name="materialuse" ngModel></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Planned Activities</ion-label>
+            <ion-input name="plannedactivities" ngModel></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Accomplished</ion-label>
+            <ion-checkbox slot="start" name="accomplished" ngModel></ion-checkbox>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label position="floating">Results</ion-label>
+            <ion-input name="results" ngModel></ion-input>
+          </ion-item>
+
+
+          <ion-item>
+            <ion-label position="floating">Challenges</ion-label>
+            <ion-input name="challenges" ngModel></ion-input>
+          </ion-item>
+
+
+          <div padding></div>
+
+          <div padding-vertical>
+            <ion-button type="submit" expand="block">
+              Add
+            </ion-button>
+          </div>
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

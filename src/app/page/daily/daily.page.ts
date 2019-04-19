@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { NavController } from '@ionic/angular';
+import { Beneficiary } from 'src/app/export/beneficiary';
+import { DailyService } from 'src/app/service/daily.service';
+import { Daily } from 'src/app/export/daily';
 
 
 @Component({
@@ -13,25 +16,43 @@ import { NavController } from '@ionic/angular';
 export class DailyPage implements OnInit {
   key: string;
   data: Observable<Beneficiary>;
+  dailyData: Observable<Daily[]>;
 
   constructor(
+    private navCtrl: NavController,
+    private dailyService: DailyService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private navCon: NavController,
     private beneficiaryService: BeneficiaryService
   ) { }
 
   ngOnInit() {
-    this.key = this.activatedRoute.snapshot.paramMap.get('id');
-    this.loadData(this.key);
+    this.loadKey()
+      .then(data => this.loadData(this.key)
+        .then(load => this.loadDaily()));
   }
 
-  loadData(id: string) {
-    return this.data = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
+  async loadKey() {
+    return this.key = await this.activatedRoute.snapshot.paramMap.get('id');
+  }
+
+  async loadData(id: string) {
+    return this.data = await this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
+  }
+
+  async loadDaily() {
+    return this.dailyData = await this.dailyService.loadDailyReport(this.key);
   }
 
   editBenef() {
-    return this.navCon.navigateForward(['addbeneficiary', this.key]);
+    return this.navCtrl.navigateForward(['addbeneficiary', this.key]);
+  }
+
+  addDaliy() {
+    return this.navCtrl.navigateForward(['dailyform', this.key]);
+  }
+
+  goBack() {
+    return this.navCtrl.back();
   }
 
 }

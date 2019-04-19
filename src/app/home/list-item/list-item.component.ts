@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { Beneficiary } from 'src/app/export/beneficiary';
+import { IonItemSliding } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-item',
@@ -13,8 +15,8 @@ export class ListItemComponent implements OnInit {
   @Input() searchInput: string;
 
   @Output() open = new EventEmitter<string>();
-  @Output() edit = new EventEmitter<string>();
-  @Output() delete = new EventEmitter<string>();
+  @Output() edit = new EventEmitter<object>();
+  @Output() delete = new EventEmitter<object>();
 
   constructor() { }
 
@@ -24,12 +26,12 @@ export class ListItemComponent implements OnInit {
     return this.open.emit(id);
   }
 
-  editItem(id: string) {
-    return this.edit.emit(id);
+  editItem(event: IonItemSliding, id: string) {
+    return this.edit.emit({event, id});
   }
 
-  deleteItem(id: string) {
-    return this.delete.emit(id);
+  deleteItem(event: IonItemSliding, id: string) {
+    return this.delete.emit({event, id});
   }
 
 }

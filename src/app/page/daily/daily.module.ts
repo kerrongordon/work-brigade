@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DailyPage } from './daily.page';
+import { ElementModule } from 'src/app/share/element.module';
+import { ItemHeaderComponent } from './item-header/item-header.component';
+import { ListItemComponent } from './list-item/list-item.component';
 
 const routes: Routes = [
   {
@@ -19,8 +22,13 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ElementModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DailyPage]
+  declarations: [
+    DailyPage,
+    ItemHeaderComponent,
+    ListItemComponent
+  ]
 })
 export class DailyPageModule {}

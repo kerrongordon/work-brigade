@@ -14,23 +14,10 @@
 
 <ion-content>
 
-  <!-- <ng-container *ngIf="dataDate?.length > 0; else nodata"> -->
-
   <ion-list>
-
-    <app-list-item [data]="data" [searchInput]="searchInput" (open)="open($event)" (edit)="edit($event)" (delete)="delete($event)"></app-list-item>
-
+    <app-list-item [data]="data" [searchInput]="searchInput" (open)="open($event)" (edit)="edit($event)"
+      (delete)="delete($event)"></app-list-item>
   </ion-list>
-  <!-- </ng-container> -->
-
-  <!-- <ng-template #nodata>
-    <div text-center class="nocontent">
-      <div>
-        <ion-icon name="time"></ion-icon>
-        <h3>No Schedule</h3>
-      </div>
-    </div>
-  </ng-template> -->
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addBeneficiary()">

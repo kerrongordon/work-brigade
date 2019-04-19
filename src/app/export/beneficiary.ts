@@ -1,4 +1,4 @@
-interface Beneficiary {
+export interface Beneficiary {
     startDate: string;
     endDate: string | null | undefined;
     address: string;

@@ -7,12 +7,14 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { SearchPipe } from '../pipe/search.pipe';
 import { ListItemComponent } from './list-item/list-item.component';
+import { ElementModule } from '../share/element.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ElementModule,
     RouterModule.forChild([
       {
         path: '',

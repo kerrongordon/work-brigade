@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from '../service/beneficiary.service';
 import { Subscription, Observable } from 'rxjs';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, IonItemSliding } from '@ionic/angular';
+import { Beneficiary } from '../export/beneficiary';
 
 @Component({
   selector: 'app-home',
@@ -32,12 +33,14 @@ export class HomePage implements OnInit {
     return this.navCtrl.navigateForward(['dailyview/', key]);
   }
 
-  edit(key: string) {
-    return this.navCtrl.navigateForward(['addbeneficiary/', key]);
+  edit(event) {
+    this.navCtrl.navigateForward(['addbeneficiary/', event.id]);
+    return event.event.close();
   }
 
-  delete(key: string) {
-    return this.presentAlertConfirm(key);
+  delete(event) {
+    this.presentAlertConfirm(event.id);
+    return event.event.close();
   }
 
   addBeneficiary() {

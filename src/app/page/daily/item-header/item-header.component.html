@@ -1,0 +1,20 @@
+<ng-container *ngIf="data | async as item; else elseTemplate">
+  <ion-card class="maincard">
+    <div padding>
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.workType  }}</p>
+    </div>
+
+    <ion-card-content>
+      <p><b>Address:</b> {{ item.address  }}</p>
+      <p><b>Contact:</b> {{ item.phoneNumber  }}</p>
+      <p><b>Constituency:</b> St Patrick's East</p>
+      <p><b>Date Project Started:</b> {{ item.startDate | date }}</p>
+      <p><b>Date Project Ended:</b> Apr 9, 2019</p>
+    </ion-card-content>
+  </ion-card>
+</ng-container>
+<ng-template #elseTemplate>
+  <app-loader></app-loader>
+  <app-loader></app-loader>
+</ng-template>

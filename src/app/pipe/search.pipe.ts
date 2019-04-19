@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Beneficiary } from '../export/beneficiary';
 
 @Pipe({
   name: 'search',
