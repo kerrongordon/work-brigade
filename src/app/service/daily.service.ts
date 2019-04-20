@@ -20,4 +20,8 @@ export class DailyService {
     }).snapshotChanges()
       .pipe(map(arr => arr.map(snap => ({ $key: snap.payload.doc.id, ...snap.payload.doc.data() }))));
   }
+
+  loadDailyById(id: string) {
+    return this.afs.doc<Daily>(`dailyReport/${id}`);
+  }
 }

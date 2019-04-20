@@ -48,7 +48,12 @@ export class DailyPage implements OnInit {
   }
 
   addDaliy() {
-    return this.navCtrl.navigateForward(['dailyform', this.key]);
+    return this.navCtrl.navigateForward(['dailyform', this.key, false]);
+  }
+
+  editDaily(event) {
+    this.navCtrl.navigateForward(['dailyform', event.id, true]);
+    return event.event.close();
   }
 
   goBack() {

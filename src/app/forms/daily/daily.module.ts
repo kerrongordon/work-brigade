@@ -10,7 +10,10 @@ import { DailyPage } from './daily.page';
 const routes: Routes = [
   {
     path: '',
-    component: DailyPage
+    children: [
+      { path: '', component: DailyPage },
+      { path: ':bool', component: DailyPage }
+    ]
   }
 ];
 

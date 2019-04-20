@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Daily } from 'src/app/export/daily';
+import { IonItemSliding } from '@ionic/angular';
 
 @Component({
   selector: 'app-list-item',
@@ -10,9 +11,15 @@ import { Daily } from 'src/app/export/daily';
 export class ListItemComponent implements OnInit {
 
   @Input() data: Observable<Daily[]>;
+  @Output() onedit = new EventEmitter<object>();
 
   constructor() { }
 
   ngOnInit() {}
+
+
+  edit(event: IonItemSliding, id: string) {
+    return this.onedit.emit({event, id});
+  }
 
 }

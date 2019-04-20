@@ -13,7 +13,7 @@
 <ion-content>
   <app-item-header [data]="data"></app-item-header>
   <ion-list>
-    <app-list-item [data]="dailyData"></app-list-item>
+    <app-list-item [data]="dailyData" (onedit)="editDaily($event)"></app-list-item>
   </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="addDaliy()">

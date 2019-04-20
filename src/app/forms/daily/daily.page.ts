@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Daily } from 'src/app/export/daily';
 import { DailyService } from 'src/app/service/daily.service';
 import { NavController, ToastController } from '@ionic/angular';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-daily',
@@ -16,6 +17,9 @@ export class DailyPage implements OnInit {
   monthNames: string[];
   dayAbbreviation: string[];
   MonthAbbreviation: string[];
+  isAccomplished = false;
+  bool: string;
+  data: Observable<Daily>;
 
   constructor(
     private datesService: DatesService,
@@ -29,8 +33,15 @@ export class DailyPage implements OnInit {
     this.dayNames = this.datesService.getDayName();
     this.monthNames = this.datesService.getMonthName();
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.bool = this.activatedRoute.snapshot.paramMap.get('bool');
     this.dayAbbreviation = this.datesService.getDayAbbreviation();
     this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
+    this.loadDaily();
+  }
+
+  loadDaily() {
+    if (this.bool !== 'true') { return; }
+    return this.data = this.dailyService.loadDailyById(this.id).valueChanges();
   }
 
   daily(form) {
@@ -43,7 +54,12 @@ export class DailyPage implements OnInit {
 
     const data: Daily = { ...cform, monthId: this.id };
 
-    console.log(data);
+    if (this.bool === 'true') {
+      this.dailyService.loadDailyById(this.id).update(cform);
+      console.log(data);
+      return this.goBack();
+    }
+
     this.dailyService.addDailyReport(data);
     return this.goBack();
   }
