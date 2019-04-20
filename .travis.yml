@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- "“11.13.0”"
+branches:
+  only:
+  - master
+before_script:
+- npm install -g @angular/cli
+- npm install -g ionic
+script:
+- ionic build --prod
+deploy:
+  provider: firebase
+  token:
+    secure: rkEaNF21y/ZAvbwmYnvkuupfC5OztZcIzAu/yp8pwZr7PznfBK968CeYGH8ghNIjrfx5Y6bECOgx5gHqBctVTnkD88PgpRe/GyobbQIkQpRJ8EsFnwGZzT+4QyWyr744jOgCtloA9URvS5qlAEmSwIE1PTEKdnF4MlVWd/5jNU/xAGXj0XKDNH+9hWdE30lANFgPPJ8L0wKNVov1RLY6kaEcsFVzlkjvq37xb8v9um9bp7z0Z7yparMrMlQpqvYzQ9rHV8o11ZRsVa4FEBEiuTyHC30WtHBLswpzujVj2raAPnf2LvmovX6kFUNjKxE7TiZ4nIFfkp+Ny6nzCk6D8iL2ZU9Zu48OpjTvYvKpjdLwZVVnnHoB+Rg9baedlGcF8fqc8iuwWvGNNF4irjCChb5f6ue6/G0D96EKGKYY8S6v3PKQJFVspkaMJTi7iUWB8sVq1FG6eNlhx3eRHRvAzsTglYmTT+ouxEg+MVIItkpm+iUNFdRDubqouiqI7ZMKtBZPIF1qHTmFNOtFVWqOz2wDFnFky/eIeABVLZfa/MG4f4aPa1h1diGh86NF7vCbm8K9Ftv9WIfeDwF4dDKJW2eYZ+v0OQ0Vh1BK6aQJlRHyQnbx1ZRMPSN/KMOVesSZZxklsM4xjP3FSQZCGjauJT0PzNuCqOgck/QkdJ3vhPQ=
+  project: work-brigade
