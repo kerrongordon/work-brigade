@@ -1,0 +1,51 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Daily",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Date",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "dailyReport",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "monthId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Monthly",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "Month",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Year",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timestamp",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
