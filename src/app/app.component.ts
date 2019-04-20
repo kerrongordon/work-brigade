@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './service/auth.service';
@@ -10,6 +10,7 @@ import { AuthService } from './service/auth.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
+  user: firebase.User;
 
   constructor(
     private platform: Platform,
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private authService: AuthService,
     private menu: MenuController,
+    private navCtrl: NavController,
   ) {
     this.initializeApp();
   }
@@ -29,6 +31,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('userdata'));
+  }
+
+  setting() {
+    return this.navCtrl.navigateForward('settings')
+      .then(log => this.menu.close());
   }
 
   logout() {

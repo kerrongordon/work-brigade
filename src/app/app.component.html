@@ -6,14 +6,16 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-        <!-- <ion-avatar margin *ngIf="auth" class="ava">
-          <img
-            [src]="auth.photoURL"
-          />
-        </ion-avatar> -->
+      <ion-avatar margin class="ava">
+        <img [src]="user.photoURL" />
+      </ion-avatar>
+      <h5 text-center padding>{{ user.displayName }}</h5>
       <ion-list>
-        <ion-item (click)="logout()">
-          <ion-label>sign out</ion-label>
+        <ion-item (click)="setting()" lines="none">
+          <ion-icon slot="start" name="settings"></ion-icon> Setting
+        </ion-item>
+        <ion-item (click)="logout()" lines="none">
+          <ion-icon slot="start" name="log-out"></ion-icon> sign out
         </ion-item>
       </ion-list>
     </ion-content>
