@@ -12,6 +12,7 @@ export class ListItemComponent implements OnInit {
 
   @Input() data: Observable<Daily[]>;
   @Output() onedit = new EventEmitter<object>();
+  @Output() ondelete = new EventEmitter<object>();
 
   constructor() { }
 
@@ -20,6 +21,10 @@ export class ListItemComponent implements OnInit {
 
   edit(event: IonItemSliding, id: string) {
     return this.onedit.emit({event, id});
+  }
+
+  delete(event: IonItemSliding, id: string) {
+    return this.ondelete.emit({event, id});
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { Beneficiary } from 'src/app/export/beneficiary';
 import { DailyService } from 'src/app/service/daily.service';
 import { Daily } from 'src/app/export/daily';
@@ -22,6 +22,7 @@ export class DailyPage implements OnInit {
     private navCtrl: NavController,
     private dailyService: DailyService,
     private activatedRoute: ActivatedRoute,
+    public alertController: AlertController,
     private beneficiaryService: BeneficiaryService
   ) { }
 
@@ -54,6 +55,37 @@ export class DailyPage implements OnInit {
   editDaily(event) {
     this.navCtrl.navigateForward(['dailyform', event.id, true]);
     return event.event.close();
+  }
+
+  deleteDaily(event) {
+    this.presentAlertConfirm(event.id);
+    return event.event.close();
+  }
+
+  deleteItem(id: string) {
+    return this.dailyService.loadDailyById(id).delete();
+  }
+
+  async presentAlertConfirm(key: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: 'Are You Sure You Want To <strong>Delete</strong> This Item!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => { }
+        }, {
+          text: 'Delete',
+          handler: () => {
+            this.deleteItem(key);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   goBack() {
