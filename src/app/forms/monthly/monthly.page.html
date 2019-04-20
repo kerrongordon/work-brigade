@@ -1,66 +1,100 @@
 <ion-header no-border>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
+    <ion-button slot="start" fill="clear" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
     <ion-title *ngIf="!(olddata | async)">Add Beneficiary</ion-title>
     <ion-title *ngIf="(olddata | async)">Edit Beneficiary</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
   <ion-grid>
     <ion-row>
       <ion-col size-md="6" offset-md="3">
-
         <form #form="ngForm" (ngSubmit)="register(form)">
-
           <ion-item>
             <ion-label position="floating">Beneficiary Name</ion-label>
-            <ion-input name="name" ngModel [value]="(olddata | async)?.name"></ion-input>
+            <ion-input
+              name="name"
+              ngModel
+              [value]="(olddata | async)?.name"
+            ></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Address</ion-label>
-            <ion-input name="address" ngModel [value]="(olddata | async)?.address"></ion-input>
+            <ion-input
+              name="address"
+              ngModel
+              [value]="(olddata | async)?.address"
+            ></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Phone Number</ion-label>
-            <ion-input name="phoneNumber" ngModel [value]="(olddata | async)?.phoneNumber"></ion-input>
+            <ion-input
+              name="phoneNumber"
+              ngModel
+              [value]="(olddata | async)?.phoneNumber"
+            ></ion-input>
           </ion-item>
-
 
           <div padding></div>
           <div padding></div>
 
           <ion-item>
             <ion-label>Start Date</ion-label>
-            <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
-              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation"
-              name="startDate" ngModel [value]="(olddata | async)?.startDate">
+            <ion-datetime
+              display-format="DDDD MMM D, YYYY"
+              [monthNames]="monthNames"
+              [monthShortNames]="MonthAbbreviation"
+              [dayNames]="dayNames"
+              [dayShortNames]="dayAbbreviation"
+              name="startDate"
+              ngModel
+              [value]="(olddata | async)?.startDate"
+            >
             </ion-datetime>
           </ion-item>
 
           <ion-item *ngIf="pageType != 'add'">
             <ion-label>End Date</ion-label>
-            <ion-datetime display-format="DDDD MMM D, YYYY" [monthNames]="monthNames"
-              [monthShortNames]="MonthAbbreviation" [dayNames]="dayNames" [dayShortNames]="dayAbbreviation"
-              name="endDate" ngModel [value]="(olddata | async)?.endDate">
+            <ion-datetime
+              display-format="DDDD MMM D, YYYY"
+              [monthNames]="monthNames"
+              [monthShortNames]="MonthAbbreviation"
+              [dayNames]="dayNames"
+              [dayShortNames]="dayAbbreviation"
+              name="endDate"
+              ngModel
+              [value]="(olddata | async)?.endDate"
+            >
             </ion-datetime>
           </ion-item>
 
           <ion-item *ngIf="pageType != 'add'">
             <ion-label>Completed</ion-label>
-            <ion-checkbox slot="start" name="completed" [ngModel]="(olddata | async)?.completed"></ion-checkbox>
+            <ion-checkbox
+              slot="start"
+              name="completed"
+              [ngModel]="(olddata | async)?.completed"
+            ></ion-checkbox>
           </ion-item>
 
           <ion-item>
             <ion-label>Type Of Work</ion-label>
-            <ion-select interface="action-sheet" placeholder="Select One" name="workType" ngModel
-              [value]="(olddata | async)?.workType">
-              <ion-select-option *ngFor="let type of typeOfWork" [value]="type.title">{{ type.title }}
+            <ion-select
+              interface="action-sheet"
+              placeholder="Select One"
+              name="workType"
+              ngModel
+              [value]="(olddata | async)?.workType"
+            >
+              <ion-select-option
+                *ngFor="let type of typeOfWork"
+                [value]="type.title"
+                >{{ type.title }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -73,11 +107,8 @@
               <div *ngIf="(olddata | async)">Save</div>
             </ion-button>
           </div>
-
         </form>
-
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

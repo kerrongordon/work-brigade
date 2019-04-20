@@ -45,7 +45,11 @@ export class DailyPage implements OnInit {
 
     console.log(data);
     this.dailyService.addDailyReport(data);
-    return this.navCtrl.pop();
+    return this.goBack();
+  }
+
+  goBack() {
+    return this.navCtrl.back();
   }
 
   async presentToastRegister(infor) {

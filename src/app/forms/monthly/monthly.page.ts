@@ -64,7 +64,7 @@ export class MonthlyPage implements OnInit {
   }
 
   goBack() {
-    return this.navCtrl.pop();
+    return this.navCtrl.back();
   }
 
   async presentToastRegister(infor) {
