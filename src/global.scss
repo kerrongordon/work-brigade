@@ -1,27 +1,39 @@
 // http://ionicframework.com/docs/theming/
-@import '~@ionic/angular/css/core.css';
-@import '~@ionic/angular/css/normalize.css';
-@import '~@ionic/angular/css/structure.css';
-@import '~@ionic/angular/css/typography.css';
-@import '~@ionic/angular/css/display.css';
-@import '~@ionic/angular/css/padding.css';
-@import '~@ionic/angular/css/float-elements.css';
-@import '~@ionic/angular/css/text-alignment.css';
-@import '~@ionic/angular/css/text-transformation.css';
-@import '~@ionic/angular/css/flex-utils.css';
-
-
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
 
 .card-backgroud {
-    --background: rgb(110, 133, 213);
-    --background: linear-gradient(45deg, rgba(110, 133, 213, 1) 0%, rgba(75, 190, 235, 1) 100%);
-    --color: white;
+  --background: rgb(110, 133, 213);
+  --background: linear-gradient(
+    45deg,
+    rgba(110, 133, 213, 1) 0%,
+    rgba(75, 190, 235, 1) 100%
+  );
+  --color: white;
 
-    p {
-        color: var(--ion-color-light);
-    }
+  p {
+    color: var(--ion-color-light);
+  }
 }
 
 .hide {
-    display: none;
+  display: none;
+}
+
+.my-custom-menu {
+  --width: 500px;
+}
+
+.ava {
+  margin: 1em auto;
+  width: 150px;
+  height: 150px;
 }

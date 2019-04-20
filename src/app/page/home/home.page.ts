@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BeneficiaryService } from '../service/beneficiary.service';
+import { BeneficiaryService } from '../../service/beneficiary.service';
 import { Subscription, Observable } from 'rxjs';
-import { NavController, AlertController, IonItemSliding } from '@ionic/angular';
-import { Beneficiary } from '../export/beneficiary';
+import { NavController, AlertController, MenuController } from '@ionic/angular';
+import { Beneficiary } from '../../export/beneficiary';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
   search: Boolean = true;
 
   constructor(
+    private menu: MenuController,
     private navCtrl: NavController,
     public alertController: AlertController,
     private beneficiaryService: BeneficiaryService
@@ -27,6 +28,10 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.loadDate();
+  }
+
+  openMenu() {
+    return this.menu.toggle('mainmenu');
   }
 
   open(key: string) {
