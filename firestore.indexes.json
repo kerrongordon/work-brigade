@@ -1,20 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "Daily",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "id",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "Date",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "dailyReport",
       "queryScope": "COLLECTION",
       "fields": [
@@ -29,19 +15,15 @@
       ]
     },
     {
-      "collectionGroup": "Monthly",
+      "collectionGroup": "Beneficiary",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "Month",
+          "fieldPath": "userUuid",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "Year",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "timestamp",
+          "fieldPath": "startDate",
           "order": "ASCENDING"
         }
       ]
