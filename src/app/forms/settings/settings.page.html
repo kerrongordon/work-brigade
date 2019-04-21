@@ -18,12 +18,11 @@
               interface="action-sheet"
               placeholder="Select One"
               name="constituency"
-              ngModel
-              required
+              [ngModel]="constsit?.constituency"
             >
               <ion-select-option
                 *ngFor="let const of constituencies"
-                [value]="const.abbreviation"
+                [value]="const.name"
                 >{{ const.name }}
               </ion-select-option>
             </ion-select>
@@ -32,12 +31,7 @@
           <div padding></div>
 
           <div padding-vertical>
-            <ion-button
-              [disabled]="form.invalid"
-              type="submit"
-              expand="block"
-              >Save</ion-button
-            >
+            <ion-button type="submit" expand="block">Save</ion-button>
           </div>
         </form>
       </ion-col>

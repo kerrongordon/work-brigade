@@ -24,6 +24,7 @@ export class MonthlyPage implements OnInit {
   pageType: string;
   edd: string | any;
   olddata: Observable<Beneficiary>;
+  auth: firebase.User;
 
   constructor(
     private datesService: DatesService,
@@ -39,6 +40,7 @@ export class MonthlyPage implements OnInit {
     this.dayNames = this.datesService.getDayName();
     this.dayAbbreviation = this.datesService.getDayAbbreviation();
     this.loadData(this.pageType);
+    this.auth = JSON.parse(localStorage.getItem('userdata'));
   }
 
   loadData(id: string) {
@@ -52,7 +54,7 @@ export class MonthlyPage implements OnInit {
       return this.presentToastRegister('Please Fill Out The Form Completely');
     }
 
-    const data: Beneficiary = form.value;
+    const data: Beneficiary = {...form.value, userUuid: this.auth.uid};
 
     if (this.pageType === 'add') {
       this.beneficiaryService.registerBeneficiary(data);

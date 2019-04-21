@@ -7,5 +7,6 @@ export interface Beneficiary {
     workType: string;
     completed: Boolean;
     monthYear: string;
+    userUuid?: string;
     $key: string;
 }

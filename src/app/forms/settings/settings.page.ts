@@ -10,16 +10,20 @@ import { NavController } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
   constituencies = constituencies;
+  constsit: any;
 
   constructor(
     private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
+    this.constsit = JSON.parse(localStorage.getItem('setting'));
   }
 
   settings(data) {
-    return console.log(data);
+    if (data.value.constituency === '') { return; }
+    localStorage.setItem('setting', JSON.stringify(data.value));
+    return console.log(data.value);
   }
 
   goBack() {

@@ -9,19 +9,19 @@ import { Beneficiary } from '../export/beneficiary';
 })
 export class BeneficiaryService {
 
-  constructor(private afs: AngularFirestore) {}
+
+  constructor(
+    private afs: AngularFirestore,
+  ) {  }
 
   registerBeneficiary(data) {
     return this.afs.collection<Beneficiary>('Beneficiary').add(data);
   }
 
-  editBeneficiary() {
-
-  }
-
   loadBeneficiary() {
+    const useid: firebase.User = JSON.parse(localStorage.getItem('userdata'));
     return this.afs.collection<Beneficiary>('Beneficiary', ref => {
-      return ref.orderBy('startDate');
+      return ref.orderBy('startDate').where('userUuid', '==', useid.uid);
     }).snapshotChanges()
     .pipe(map(arr => arr.map(snap => ( { $key: snap.payload.doc.id, ...snap.payload.doc.data() } ))));
   }

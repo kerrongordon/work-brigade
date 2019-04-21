@@ -6,5 +6,6 @@ export interface Daily {
     monthId: string;
     plannedactivities: string;
     results: string;
-    $key: string;
+    userUuid?: string;
+    $key?: string;
 }
