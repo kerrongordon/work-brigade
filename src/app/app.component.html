@@ -6,10 +6,13 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-avatar margin class="ava">
+      <ion-avatar margin class="ava" *ngIf="user">
         <img [src]="user.photoURL" />
       </ion-avatar>
-      <h5 text-center padding>{{ user.displayName }}</h5>
+      <div text-center padding text-wrap>
+        <h5 *ngIf="user">{{ user.displayName }}</h5>
+        <h6 *ngIf="user" >{{ user.email }}</h6>
+      </div>
       <ion-list>
         <ion-item (click)="setting()" lines="none">
           <ion-icon slot="start" name="settings"></ion-icon> Setting

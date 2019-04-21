@@ -31,17 +31,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem('userdata'));
+    this.loadUser();
   }
 
-  setting() {
-    return this.navCtrl.navigateForward('settings')
-      .then(log => this.menu.close());
+  loadUser() {
+     return this.authService.itemValue.subscribe(data => this.user = data);
   }
 
-  logout() {
-    return this.authService.logOut()
-      .then(log => this.menu.close());
+  async setting() {
+    const log = await this.navCtrl.navigateForward('settings');
+    return await this.menu.close();
+  }
+
+  async logout() {
+    const log = await this.authService.logOut();
+    const log_1 = await this.menu.close();
+    return this.loadUser().unsubscribe();
   }
 
 }
