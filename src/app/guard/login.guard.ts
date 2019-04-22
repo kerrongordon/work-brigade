@@ -14,7 +14,7 @@ export class LoginGuard implements CanActivate {
   ) { }
 
   async canActivate() {
-    const getData = this.authService.getUserData();
+    const getData = await this.authService.getUserData();
 
     if (getData === null) {
       this.navCtrl.navigateRoot('login');

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
+import { IonicModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { LoaderComponent } from './loader/loader.component';
   ],
   imports: [
     CommonModule,
+    IonicModule
   ],
   exports: [
     LoaderComponent
