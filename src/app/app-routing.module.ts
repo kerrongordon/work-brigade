@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './forms/settings/settings.module#SettingsPageModule', canActivate: [LoginGuard] },
   { path: 'dailyview/:id', loadChildren: './page/daily/daily.module#DailyPageModule', canActivate: [LoginGuard] },
   { path: 'register', loadChildren: './page/register/register.module#RegisterPageModule' },
+  { path: 'day/:id', loadChildren: './page/day/day.module#DayPageModule', canActivate: [LoginGuard] },
 ];
 
 @NgModule({

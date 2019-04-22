@@ -13,8 +13,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { registerLocaleData } from '@angular/common';
+import localeFrEn from '@angular/common/locales/en';
+import localeFrEnExtra from '@angular/common/locales/extra/en';
 
-
+registerLocaleData(localeFrEn, localeFrEnExtra);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

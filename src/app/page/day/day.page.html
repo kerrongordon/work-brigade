@@ -1,0 +1,67 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title text-center *ngIf="(data | async) as item">{{
+      item.date | date: "EEEE, MMMM d"
+    }}</ion-title>
+    <ion-button slot="end" fill="clear" (click)="edit()">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="(data | async) as item; else elseTemplate">
+    <ion-card color="tertiary" *ngIf="item.plannedactivities">
+      <ion-card-header>
+        <ion-card-title>Planned Activities</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ item.plannedactivities }}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card color="tertiary" *ngIf="item.materialuse">
+      <ion-card-header>
+        <ion-card-title>Material Use</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ item.materialuse }}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card color="tertiary" *ngIf="item.challenges">
+      <ion-card-header>
+        <ion-card-title>Challenges</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ item.challenges }}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card color="tertiary" *ngIf="item.results">
+      <ion-card-header>
+        <ion-card-title>Results</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ item.results }}
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card [color]="item.accomplished ? 'success' : 'danger'">
+      <ion-card-header>
+        <ion-card-title text-center>
+          {{ item.accomplished ? "Accomplished" : "Unaccomplished" }}
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <app-loader></app-loader>
+    <app-loader></app-loader>
+    <app-loader></app-loader>
+    <app-loader></app-loader>
+  </ng-template>
+</ion-content>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="data | async as items; else elseTemplate">
   <ion-card class="card-backgroud" margin-vertical *ngFor="let item of items">
     <ion-item-sliding #slidingItem>
-      <ion-item button class="card-backgroud" lines="none">
+      <ion-item button class="card-backgroud" lines="none" (click)="open(item.$key)">
         <ion-icon slot="start" name="bookmark"></ion-icon>
         <ion-label class="day-item-text">
           <p><b>{{ item.date | date:'EEEE' }}</b></p>
@@ -23,8 +23,6 @@
   </ion-card>
 </ng-container>
 <ng-template #elseTemplate>
-  <app-loader></app-loader>
-  <app-loader></app-loader>
   <app-loader></app-loader>
   <app-loader></app-loader>
 </ng-template>

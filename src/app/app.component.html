@@ -2,15 +2,11 @@
   <ion-menu side="start" menuId="mainmenu">
     <ion-header no-border>
       <ion-toolbar>
-        <ion-title>Start Menu</ion-title>
+        <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-avatar margin class="ava" *ngIf="user">
-        <img [src]="user.photoURL" />
-      </ion-avatar>
       <div text-center padding text-wrap>
-        <h5 *ngIf="user">{{ user.displayName }}</h5>
         <h6 *ngIf="user" >{{ user.email }}</h6>
       </div>
       <ion-list>

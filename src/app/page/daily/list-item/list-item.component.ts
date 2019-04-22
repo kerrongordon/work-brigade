@@ -11,6 +11,7 @@ import { IonItemSliding } from '@ionic/angular';
 export class ListItemComponent implements OnInit {
 
   @Input() data: Observable<Daily[]>;
+  @Output() onopen = new EventEmitter<string>();
   @Output() onedit = new EventEmitter<object>();
   @Output() ondelete = new EventEmitter<object>();
 
@@ -18,6 +19,9 @@ export class ListItemComponent implements OnInit {
 
   ngOnInit() {}
 
+  open(id: string) {
+    return this.onopen.emit(id);
+  }
 
   edit(event: IonItemSliding, id: string) {
     return this.onedit.emit({event, id});
