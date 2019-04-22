@@ -10,30 +10,59 @@
 <ion-content padding>
   <ion-grid>
     <ion-row>
-      <ion-col size-md="6" offset-md="3">
-        <form #form="ngForm" (ngSubmit)="settings(form)">
-          <ion-item>
-            <ion-label>Constituency</ion-label>
-            <ion-select
-              interface="action-sheet"
-              placeholder="Select One"
-              name="constituency"
-              [ngModel]="constsit?.constituency"
-            >
-              <ion-select-option
-                *ngFor="let const of constituencies"
-                [value]="const.name"
-                >{{ const.name }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+      <ion-col size-md="6" offset-md="3" size-xl="4" offset-xl="4">
 
-          <div padding></div>
+        <ion-list>
 
           <div padding-vertical>
-            <ion-button type="submit" expand="block">Save</ion-button>
+            <ion-item>
+              <ion-label position="floating">User Name</ion-label>
+              <ion-input *ngIf="data" type="text" [(ngModel)]="name || data.name "></ion-input>
+              <ion-input *ngIf="!data" type="text" [(ngModel)]="name"></ion-input>
+            </ion-item>
           </div>
-        </form>
+
+          <ion-item padding-vertical>
+              <ion-label>Constituency</ion-label>
+              <ion-select
+                *ngIf="data"
+                interface="action-sheet"
+                placeholder="Select One"
+                name="constituency"
+                [(ngModel)]="constituency || data.Constituency"
+              >
+                <ion-select-option
+                  *ngFor="let const of constituencies"
+                  [value]="const.name"
+                  >{{ const.name }}
+                </ion-select-option>
+              </ion-select>
+              <ion-select
+                *ngIf="!data"
+                interface="action-sheet"
+                placeholder="Select One"
+                name="constituency"
+                [(ngModel)]="constituency"
+              >
+                <ion-select-option
+                  *ngFor="let const of constituencies"
+                  [value]="const.name"
+                  >{{ const.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item padding-vertical>
+              <ion-label>Dark Theme</ion-label>
+              <ion-toggle color="secondary" [(ngModel)]="theme"></ion-toggle>
+            </ion-item>
+
+            <div padding-vertical>
+                <ion-button (click)="settings()" expand="block">Save</ion-button>
+              </div>
+        
+        </ion-list>
+
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -1,4 +1,6 @@
 export interface User {
-    uuid: string;
-    email: string;
+    uuid?: string;
+    email?: string;
+    name?: string;
+    Constituency?: string;
 }

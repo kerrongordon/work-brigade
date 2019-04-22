@@ -56,7 +56,6 @@ export class DailyPage implements OnInit {
 
     if (this.bool === 'true') {
       this.dailyService.loadDailyById(this.id).update(cform);
-      console.log(data);
       return this.goBack();
     }
 

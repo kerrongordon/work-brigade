@@ -17,6 +17,7 @@
             <ion-label position="floating">Beneficiary Name</ion-label>
             <ion-input
               name="name"
+              type="text"
               ngModel
               [value]="(olddata | async)?.name"
             ></ion-input>
@@ -26,6 +27,7 @@
             <ion-label position="floating">Address</ion-label>
             <ion-input
               name="address"
+              type="text"
               ngModel
               [value]="(olddata | async)?.address"
             ></ion-input>
@@ -35,6 +37,7 @@
             <ion-label position="floating">Phone Number</ion-label>
             <ion-input
               name="phoneNumber"
+              type="number"
               ngModel
               [value]="(olddata | async)?.phoneNumber"
             ></ion-input>

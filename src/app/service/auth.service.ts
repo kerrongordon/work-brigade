@@ -5,6 +5,7 @@ import { NavController, ToastController, LoadingController } from '@ionic/angula
 import { Subject } from 'rxjs/internal/Subject';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../export/user';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class AuthService {
            };
           await this.afs.collection<User>('users').add(user);
           await this.loading.dismiss();
-          return this.logIn(email, password);
+          return this.logIn(email, password).then(() => this.navCtrl.navigateForward('settings'));
         });
     } catch (error) {
       return this.presentToast(error.message);
@@ -68,6 +69,17 @@ export class AuthService {
     return this.afAuth.auth.signOut()
       .then(log => this.navCtrl.navigateRoot('login'))
       .then(log => this.getState().unsubscribe());
+  }
+
+  getUserById(id: string) {
+    return this.afs.doc<User>(`users/${id}`);
+  }
+
+  getUserKey(id) {
+    return this.afs.collection<User>('users', ref =>
+      ref.where('uuid', '==', id)
+    ).snapshotChanges()
+    .pipe(map( arr => arr.map(snap => ({$key: snap.payload.doc.id, data: snap.payload.doc.data() }) )));
   }
 
   async presentToast(mess: string) {

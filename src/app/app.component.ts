@@ -4,6 +4,7 @@ import { Platform, MenuController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './service/auth.service';
+import { ThemeService } from './service/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private menu: MenuController,
     private navCtrl: NavController,
+    private themeService: ThemeService
   ) {
     this.initializeApp();
   }
@@ -32,6 +34,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.loadUser();
+    this.getSaveTheme();
+  }
+
+  async getSaveTheme() {
+    const constsit: {theme: boolean} = await JSON.parse(localStorage.getItem('theme'));
+    if (constsit === null || constsit === undefined) { return; }
+    return this.themeService.setTheme(constsit.theme);
   }
 
   loadUser() {
