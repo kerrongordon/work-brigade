@@ -11,7 +11,7 @@
         lines="none"
         class="card-backgroud"
       >
-        <ion-icon slot="start" name="filing" size="large"></ion-icon>
+        <ion-icon slot="start" class="cardIcon" name="filing" size="large"></ion-icon>
         <ion-label text-wrap>
           <p>
             <strong>{{ item.name }}</strong>
@@ -21,7 +21,7 @@
         </ion-label>
         <ion-icon
           name="checkmark-circle"
-          [color]="item.completed ? 'light' : ''"
+          [class]="item.completed ? 'cardIcongreen' : 'cardIcon'"
           slot="end"
         ></ion-icon>
       </ion-item>

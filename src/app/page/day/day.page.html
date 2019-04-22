@@ -17,47 +17,47 @@
     <ion-row>
       <ion-col size-md="6" offset-md="3" size-xl="4" offset-xl="4">
         <ng-container *ngIf="(data | async) as item; else elseTemplate">
-          <ion-card color="tertiary" *ngIf="item.plannedactivities">
-            <ion-card-header>
-              <ion-card-title>Planned Activities</ion-card-title>
-            </ion-card-header>
+          <ion-card class="card-backgroud" margin-vertical *ngIf="item.plannedactivities">
+            
+            <h4 padding-horizontal>Planned Activities</h4>
+            
             <ion-card-content>
               {{ item.plannedactivities }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card color="tertiary" *ngIf="item.materialuse">
-            <ion-card-header>
-              <ion-card-title>Material Use</ion-card-title>
-            </ion-card-header>
+          <ion-card class="card-backgroud" margin-vertical *ngIf="item.materialuse">
+            
+            <h4 padding-horizontal>Material Use</h4>
+            
             <ion-card-content>
               {{ item.materialuse }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card color="tertiary" *ngIf="item.challenges">
-            <ion-card-header>
-              <ion-card-title>Challenges</ion-card-title>
-            </ion-card-header>
+          <ion-card class="card-backgroud" margin-vertical *ngIf="item.challenges">
+            
+            <h4 padding-horizontal>Challenges</h4>
+            
             <ion-card-content>
               {{ item.challenges }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card color="tertiary" *ngIf="item.results">
-            <ion-card-header>
-              <ion-card-title>Results</ion-card-title>
-            </ion-card-header>
+          <ion-card class="card-backgroud" margin-vertical *ngIf="item.results">
+            
+            <h4 padding-horizontal>Results</h4>
+            
             <ion-card-content>
               {{ item.results }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card [color]="item.accomplished ? 'success' : 'danger'">
+          <ion-card margin-vertical [class]="item.accomplished ? 'done' : 'undone'">
             <ion-card-header>
-              <ion-card-title text-center>
+              <div text-center>
                 {{ item.accomplished ? "Accomplished" : "Unaccomplished" }}
-              </ion-card-title>
+              </div>
             </ion-card-header>
           </ion-card>
         </ng-container>

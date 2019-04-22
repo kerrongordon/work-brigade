@@ -1,0 +1,15 @@
+ion-card-content{
+    font-size: 1.05em;
+}
+
+.done {
+    --background: rgb(150,201,61);
+    --background: linear-gradient(344deg, rgba(150,201,61,1) 0%, rgba(0,176,155,1) 100%);
+    --color: white;
+}
+
+.undone {
+    --background: rgb(204,83,51);
+    --background: linear-gradient(344deg, rgba(204,83,51,1) 0%, rgba(35,7,77,1) 100%);
+    --color: white;
+}
