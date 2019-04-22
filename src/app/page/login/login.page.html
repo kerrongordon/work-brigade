@@ -1,12 +1,31 @@
 <ion-content padding color="primary">
   <ion-avatar class="avlog">
-    <img src="../../../assets/avatar.png"/>
+    <img src="../../../assets/avatar.png" />
   </ion-avatar>
-  <div text-center padding>
-    <h2>Let's get gou set up</h2>
-    <p>You can start by signing in with your Google Account</p>
+  <div text-center padding-horizontal>
+    <h2>Let's get you set up</h2>
+    <p>You can start by signing in with your Email Address</p>
   </div>
-  <ion-button margin expand="full" (click)="login()">
-    <ion-icon slot="start" name="logo-google"></ion-icon> Sign in with Google
-  </ion-button>
+
+  <ion-list padding-horizontal>
+    <ion-item color="primary">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item color="primary">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="Password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <div padding></div>
+
+    <ion-button margin-vertical expand="full" (click)="login()">
+      <ion-icon slot="start" name="log-in"></ion-icon> Sign in 
+    </ion-button>
+
+    <div text-center>
+      <p class="rline">Don't have an Account <a routerLink="/register">Register Here</a></p>
+    </div>
+  </ion-list>
 </ion-content>

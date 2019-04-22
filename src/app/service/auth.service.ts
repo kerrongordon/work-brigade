@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController, LoadingController } from '@ionic/angular';
 import { Subject } from 'rxjs/internal/Subject';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from '../export/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,14 @@ import { Subject } from 'rxjs/internal/Subject';
 export class AuthService {
 
   itemValue = new Subject<firebase.User>();
+  loading: HTMLIonLoadingElement;
 
   constructor(
     public afAuth: AngularFireAuth,
     private navCtrl: NavController,
+    public toastController: ToastController,
+    private afs: AngularFirestore,
+    public loadingController: LoadingController
   ) {
     this.getState();
    }
@@ -29,9 +35,33 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('userdata'));
   }
 
-  logIn() {
-    return this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
-      .then(log => this.navCtrl.navigateRoot('home'));
+  async logIn(email: string, password: string) {
+    this.presentLoading('Signing In...');
+      try {
+        await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+        await this.loading.dismiss();
+        return this.navCtrl.navigateRoot('home');
+      } catch (error) {
+        return this.presentToast(error.message);
+      }
+  }
+
+  async register(email: string, password: string) {
+    this.presentLoading('Registing...');
+    try {
+      await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        .then(async data => {
+          const user =  {
+            uuid: data.user.uid,
+            email: data.user.email
+           };
+          await this.afs.collection<User>('users').add(user);
+          await this.loading.dismiss();
+          return this.logIn(email, password);
+        });
+    } catch (error) {
+      return this.presentToast(error.message);
+    }
   }
 
   logOut() {
@@ -39,4 +69,20 @@ export class AuthService {
       .then(log => this.navCtrl.navigateRoot('login'))
       .then(log => this.getState().unsubscribe());
   }
+
+  async presentToast(mess: string) {
+    const toast = await this.toastController.create({
+      message: mess,
+      duration: 5000
+    });
+    toast.present();
+  }
+
+  async presentLoading(mess: string) {
+    this.loading = await this.loadingController.create({
+      message: mess,
+    });
+    this.loading.present();
+  }
+
 }

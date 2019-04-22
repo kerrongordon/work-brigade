@@ -7,12 +7,19 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
+
+  email = '';
+  password = '';
+
   constructor(
     private authService: AuthService,
   ) { }
 
-  login() {
-    return this.authService.logIn();
+  async login() {
+    const {email, password} = await this;
+    if (email.trim() !== '' && password.trim() !== '') {
+      return this.authService.logIn(email, password);
+    }
   }
 
 }
