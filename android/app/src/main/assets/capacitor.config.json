@@ -1,0 +1,7 @@
+{
+  "appId": "com.kerrongordon.brigade",
+  "appName": "brigade",
+  "bundledWebRuntime": false,
+  "webDir": "www",
+  "linuxAndroidStudioPath": "/var/lib/flatpak/app/com.google.AndroidStudio/x86_64/stable/61da5b30e326c55e50859bc94707dfb8986b9f5a18e7e25c720f09791edf3efe/files/extra/bin/studio.sh"
+}
