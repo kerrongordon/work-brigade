@@ -43,6 +43,7 @@ export class AuthService {
         await this.loading.dismiss();
         return this.navCtrl.navigateRoot('home');
       } catch (error) {
+        await this.loading.dismiss();
         return this.presentToast(error.message);
       }
   }
@@ -61,6 +62,7 @@ export class AuthService {
           return this.logIn(email, password).then(() => this.navCtrl.navigateForward('settings'));
         });
     } catch (error) {
+      await this.loading.dismiss();
       return this.presentToast(error.message);
     }
   }
