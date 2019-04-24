@@ -1,102 +1,105 @@
+import { auth } from 'firebase/app';
+import { User } from '../export/user';
+import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
-import { NavController, ToastController, LoadingController } from '@ionic/angular';
-import { Subject } from 'rxjs/internal/Subject';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { User } from '../export/user';
-import { map } from 'rxjs/internal/operators/map';
+import { NavController, ToastController, LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  itemValue = new Subject<firebase.User>();
   loading: HTMLIonLoadingElement;
 
   constructor(
-    public afAuth: AngularFireAuth,
-    private navCtrl: NavController,
-    public toastController: ToastController,
+    private storage: Storage,
     private afs: AngularFirestore,
-    public loadingController: LoadingController
-  ) {
-    this.getState();
-   }
+    private navCtrl: NavController,
+    private afAuth: AngularFireAuth,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+  ) { }
 
-  getState() {
-    return this.afAuth.authState.subscribe( state => {
-      this.itemValue.next(state);
-      return localStorage.setItem('userdata', JSON.stringify(state));
-    });
-  }
 
-  getUserData(): firebase.User {
-    return JSON.parse(localStorage.getItem('userdata'));
-  }
-
-  async logIn(email: string, password: string) {
-    this.presentLoading('Signing In...');
-      try {
-        await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-        await this.loading.dismiss();
-        return this.navCtrl.navigateRoot('home');
-      } catch (error) {
-        await this.loading.dismiss();
-        return this.presentToast(error.message);
-      }
-  }
-
-  async register(email: string, password: string) {
-    this.presentLoading('Registing...');
-    try {
-      await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then(async data => {
-          const user =  {
-            uuid: data.user.uid,
-            email: data.user.email
-           };
-          await this.afs.collection<User>('users').add(user);
-          await this.loading.dismiss();
-          return this.logIn(email, password).then(() => this.navCtrl.navigateForward('settings'));
-        });
-    } catch (error) {
-      await this.loading.dismiss();
-      return this.presentToast(error.message);
-    }
-  }
-
-  logOut() {
-    return this.afAuth.auth.signOut()
-      .then(log => this.navCtrl.navigateRoot('login'))
-      .then(log => this.getState().unsubscribe());
-  }
-
+  // NOTE Get User By Id
   getUserById(id: string) {
     return this.afs.doc<User>(`users/${id}`);
   }
 
-  getUserKey(id) {
-    return this.afs.collection<User>('users', ref =>
-      ref.where('uuid', '==', id)
-    ).snapshotChanges()
-    .pipe(map( arr => arr.map(snap => ({$key: snap.payload.doc.id, data: snap.payload.doc.data() }) )));
+
+  // NOTE error on Sign In and Register..
+  async signInRegisterError(error) {
+    return await this.loading.dismiss()
+    .then(() => this.notifiToast(error));
   }
 
-  async presentToast(mess: string) {
-    const toast = await this.toastController.create({
-      message: mess,
-      duration: 5000
-    });
-    toast.present();
+
+  // NOTE Notification on Sign In or Register
+  async notifiToast(mess: string) {
+    const toast = await this.toastController.create({ message: mess, duration: 5000});
+    return toast.present();
   }
 
-  async presentLoading(mess: string) {
-    this.loading = await this.loadingController.create({
-      message: mess,
-    });
-    this.loading.present();
+
+  // NOTE Loading animation with Messages
+  async loadingMess(mess: string) {
+    this.loading = await this.loadingController.create({ message: mess});
+    return this.loading.present();
+  }
+
+
+  // NOTE User Sign Out..
+  async userSignOut() {
+    return await this.afAuth.auth.signOut()
+      .then(() => this.navCtrl.navigateRoot('login'))
+      .then(() => this.storage.set('islogin', false));
+  }
+
+
+  // NOTE User Sign In...
+  async userSignIn(email: string, password: string) {
+    this.loadingMess('Signing In...');
+    try {
+      await this.afAuth.auth.signInWithEmailAndPassword(email, password)
+        .then(() => this.storage.set('islogin', true))
+        .then(() => this.navCtrl.navigateRoot('home'))
+        .then(() => this.loading.dismiss());
+    } catch (error) {
+      return this.signInRegisterError(error);
+    }
+  }
+
+
+  // NOTE User Registion...
+  async userRegister(email: string, password: string) {
+    this.loadingMess('Registing...');
+    try {
+      await this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        .then(data => this.createUserDatabse(data))
+        .then(() => this.userSignIn(email, password))
+        .then(() => this.navCtrl.navigateForward('settings'));
+    } catch (error) {
+      return this.signInRegisterError(error);
+    }
+  }
+
+
+  // NOTE create user database from Register
+  async createUserDatabse(data: auth.UserCredential) {
+    const { user } = await data;
+    const infor: User = {
+      uid: user.uid,
+      email: user.email,
+      timestamp: new Date(Date.now()).toString(),
+      constituency: '',
+      sex: '',
+      theme: 'light'
+    };
+    return this.afs.collection<User>('users').add(infor)
+      .then( getId => this.getUserById(getId.id).update({id: getId.id}))
+      .then(() => this.loading.dismiss());
   }
 
 }
