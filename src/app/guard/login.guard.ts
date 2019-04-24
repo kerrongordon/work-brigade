@@ -1,7 +1,8 @@
+import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { AuthService } from '../service/auth.service';
 import { NavController } from '@ionic/angular';
+import { AuthService } from '../service/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +10,18 @@ import { NavController } from '@ionic/angular';
 export class LoginGuard implements CanActivate {
 
   constructor(
-    public authService: AuthService,
+    private storage: Storage,
     private navCtrl: NavController,
+    public authService: AuthService,
   ) { }
 
   async canActivate() {
-    const getData = await this.authService.getUserData();
 
-    if (getData === null) {
-      this.navCtrl.navigateRoot('login');
-      return false;
-    } else {
-      return true;
-    }
+    return this.storage.get('islogin')
+      .then(val => {
+        if (val === true) {  return true; }
+        this.navCtrl.navigateRoot('login');
+        return false;
+      });
   }
 }

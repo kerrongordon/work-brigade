@@ -1,10 +1,11 @@
+import { Storage } from '@ionic/storage';
 import { User } from './../../export/user';
+import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthService } from 'src/app/service/auth.service';
+import { ThemeService } from 'src/app/service/theme.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { constituencies } from 'src/app/export/constituencies';
-import { NavController } from '@ionic/angular';
-import { ThemeService } from 'src/app/service/theme.service';
-import { AuthService } from 'src/app/service/auth.service';
-import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-settings',
@@ -13,67 +14,89 @@ import { Subscription } from 'rxjs/internal/Subscription';
 })
 export class SettingsPage implements OnInit, OnDestroy {
 
+  id: string;
+  sex: string;
+  name: string;
+  theme: string;
+  email: string;
+  timestamp: string;
+  themeUpdate: string;
+  constituency: string;
+  themeBoolean: boolean;
+  getUserAccountSub: Subscription;
   constituencies = constituencies;
-  constsit: {theme: boolean};
-  name = '';
-  constituency = '';
-  theme = false;
-  fbu: firebase.User ;
-  key: string;
-  data: User;
-  userSub: Subscription;
 
   constructor(
+    private storage: Storage,
     private navCtrl: NavController,
-    private themeService: ThemeService,
     private authService: AuthService,
-  ) { }
+    private themeService: ThemeService,
+  ) {}
 
   ngOnInit() {
-    this.getSaveTheme();
-    this.getUserId();
+    this.getUserAccount();
   }
 
-  async getSaveTheme() {
-    this.constsit = await JSON.parse(localStorage.getItem('theme'));
-    if (this.constsit === null || this.constsit === undefined) { return; }
-    this.themeService.setTheme(this.constsit.theme);
-    return this.theme = this.constsit.theme;
-  }
 
-  setTheme() {
-    const { theme } = this;
-    return localStorage.setItem('theme', JSON.stringify({ theme }));
-  }
-
-  async getUserId() {
-    this.fbu = await JSON.parse(localStorage.getItem('userdata'));
-    return this.userSub = this.authService.getUserKey(this.fbu.uid).subscribe( snap => {
-      this.key = snap[0].$key;
-      this.data = snap[0].data;
+  // NOTE Get user Account Information
+  async getUserAccount() {
+    return await this.storage.get('userdata').then( val => {
+      return this.getUserAccountSub = this.authService.getUserDataWithUid(val).subscribe(data => {
+        this.id = data[0].id;
+        this.sex = data[0].sex;
+        this.name = data[0].name;
+        this.theme = data[0].theme;
+        this.email = data[0].email;
+        this.timestamp = data[0].timestamp;
+        this.constituency = data[0].constituency;
+        this.themeToggle()
+          .then(() => this.changeTheme());
+      });
     });
   }
 
-  ngOnDestroy() {
-    this.userSub.unsubscribe();
+
+  // NOTE Get Theme Form Database
+  async themeToggle() {
+    return this.themeBoolean = await this.theme === 'light' ? false : true;
   }
 
-  settings() {
-    this.setTheme();
-    this.themeService.setTheme(this.theme);
 
-    const datas: User = {
-      email: this.fbu.email,
-      name: this.name || this.data.name,
-      Constituency: this.constituency || this.data.Constituency
+  // NOTE Update user Database Information
+  upDateDatabase() {
+    if (this.themeBoolean === false) {
+      this.themeUpdate = 'light';
+    } else {
+      this.themeUpdate = 'dark';
+    }
+
+    const infor: User = {
+      'email': this.email,
+      'sex': this.sex || '',
+      'name': this.name || '',
+      'theme': this.themeUpdate,
+      'constituency': this.constituency || '',
     };
-
-    this.authService.getUserById(this.key).update(datas);
-    return this.goBack();
+    this.authService.getUserById(this.id).update(infor);
+    return this.navCtrl.back();
   }
 
+
+  // NOTE Go Back a Page
   goBack() {
     return this.navCtrl.back();
+  }
+
+
+  // NOTE Change theme
+  changeTheme() {
+    return this.themeService.setTheme(this.theme);
+  }
+
+
+  // NOTE  Clean up
+  ngOnDestroy() {
+    this.getUserAccountSub.unsubscribe();
   }
 
 }

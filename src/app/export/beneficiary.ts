@@ -1,12 +1,11 @@
 export interface Beneficiary {
     startDate: string;
-    endDate: string | null | undefined;
+    endDate?: string | null | undefined;
     address: string;
     name: string;
-    phoneNumber: string;
+    phoneNumber?: string;
     workType: string;
     completed: Boolean;
-    monthYear: string;
-    userUuid?: string;
-    $key: string;
+    uid?: string;
+    id?: string;
 }

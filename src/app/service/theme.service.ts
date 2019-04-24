@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -7,14 +8,16 @@ import { DOCUMENT } from '@angular/common';
 export class ThemeService {
 
   constructor(
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private storage: Storage,
   ) { }
 
   setTheme(theme) {
-    if (theme === false) {
-      return this.setGlobalCSS(this.lighttheme());
-    } else {
+    this.storage.set('theme', theme);
+    if (theme === 'dark') {
       return this.setGlobalCSS(this.darktheme());
+    } else {
+      return this.setGlobalCSS(this.lighttheme());
     }
   }
 

@@ -18,7 +18,7 @@ export class LoginPage {
   async login() {
     const {email, password} = await this;
     if (email.trim() !== '' && password.trim() !== '') {
-      return this.authService.logIn(email, password);
+      return this.authService.userSignIn(email, password);
     }
   }
 

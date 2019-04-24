@@ -1,82 +1,143 @@
-import { Component, OnInit } from '@angular/core';
-import { DatesService } from 'src/app/service/forms/dates.service';
-import { typeOfWork } from 'src/app/export/typeOfWork';
-import { ToastController, NavController } from '@ionic/angular';
-import { BeneficiaryService } from 'src/app/service/beneficiary.service';
-import { constituencies } from 'src/app/export/constituencies';
+import { Storage } from '@ionic/storage';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
+import { typeOfWork } from 'src/app/export/typeOfWork';
 import { Beneficiary } from 'src/app/export/beneficiary';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ToastController, NavController } from '@ionic/angular';
+import { constituencies } from 'src/app/export/constituencies';
+import { DatesService } from 'src/app/service/forms/dates.service';
+import { BeneficiaryService } from 'src/app/service/beneficiary.service';
 
 @Component({
   selector: 'app-monthly',
   templateUrl: './monthly.page.html',
   styleUrls: ['./monthly.page.scss'],
 })
-export class MonthlyPage implements OnInit {
-  monthNames: string[];
-  MonthAbbreviation: string[];
+export class MonthlyPage implements OnInit, OnDestroy {
   dayNames: string[];
+  monthNames: string[];
   dayAbbreviation: string[];
+  MonthAbbreviation: string[];
 
   typeOfWork = typeOfWork;
   constituencies = constituencies;
   pageType: string;
-  edd: string | any;
-  olddata: Observable<Beneficiary>;
-  auth: firebase.User;
+
+
+  startDate: string;
+  endDate: string | null | undefined;
+  address = '';
+  name = '';
+  phoneNumber = '';
+  workType: string;
+  completed: Boolean;
+  uid: string;
+  id: string;
+  uidLocal: string;
+  loadDataForEditSub: Subscription;
 
   constructor(
-    private datesService: DatesService,
+    private storage: Storage,
     private navCtrl: NavController,
+    private datesService: DatesService,
     private activatedRoute: ActivatedRoute,
     private toastController: ToastController,
     private beneficiaryService: BeneficiaryService) { }
 
   ngOnInit() {
     this.pageType = this.activatedRoute.snapshot.paramMap.get('id');
-    this.monthNames = this.datesService.getMonthName();
-    this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
+
     this.dayNames = this.datesService.getDayName();
+    this.monthNames = this.datesService.getMonthName();
     this.dayAbbreviation = this.datesService.getDayAbbreviation();
-    this.loadData(this.pageType);
-    this.auth = JSON.parse(localStorage.getItem('userdata'));
+    this.MonthAbbreviation = this.datesService.getMonthAbbreviation();
+
+    this.getUserUid();
+    this.loadDataForEdit();
   }
 
-  loadData(id: string) {
-    if (id === 'add') { return; }
-    return this.olddata = this.beneficiaryService.loadBeneficiaryById(id).valueChanges();
-  }
-
-  register(form) {
-
-    if (form.value.name.trim() === '' || form.value.address.trim() === '') {
-      return this.presentToastRegister('Please Fill Out The Form Completely');
-    }
-
-    const data: Beneficiary = {...form.value, userUuid: this.auth.uid};
-
-    if (this.pageType === 'add') {
-      this.beneficiaryService.registerBeneficiary(data);
-      return this.goBack();
-    } else {
-      this.beneficiaryService.loadBeneficiaryById(this.pageType).update(data);
-      return this.goBack();
+  ngOnDestroy() {
+    if (this.pageType !== 'add') {
+      this.loadDataForEditSub.unsubscribe();
     }
   }
 
-  goBack() {
-    return this.navCtrl.back();
-  }
-
-  async presentToastRegister(infor) {
+  // NOTE Error Notification
+  async errorNoti(infor: string) {
     const toast = await this.toastController.create({
       message: infor,
-      duration: 2000
+      duration: 4000
     });
     toast.present();
   }
 
 
+  // NOTE Go Back a page
+  goBack() {
+    return this.navCtrl.back();
+  }
+
+
+  // NOTE Add New Beneficiary
+  addNewBeneficiary() {
+
+    if (this.name.trim() === '' ||
+      this.address.trim() === '' ||
+      this.startDate === '' ||
+      this.workType === '') {
+        this.errorNoti('Please ensure that you include Name, Address, Start Date and Work Type');
+        return;
+      }
+
+    const infor: Beneficiary = {
+      'startDate': this.startDate || '',
+      'endDate': this.endDate || '',
+      'address': this.address || '',
+      'name': this.name || '',
+      'phoneNumber': this.phoneNumber || '',
+      'workType': this.workType || '',
+      'completed': this.completed || false,
+      'uid': this.uidLocal,
+      'id': this.id || ''
+    };
+    return this.findOutPageType(infor);
+  }
+
+
+  // NOTE Get User Uid
+  async getUserUid() {
+    return this.uidLocal = await this.storage.get('userdata');
+  }
+
+
+  // NOTE Find out what Page Type we are on Then POST or UPDATE
+  findOutPageType(infor: Beneficiary) {
+    if (this.pageType === 'add') {
+      this.beneficiaryService.registerBeneficiary(infor);
+      return this.goBack();
+    } else {
+      this.beneficiaryService.loadBeneficiaryById(this.pageType).update(infor);
+      return this.goBack();
+    }
+  }
+
+
+  // NOTE Load Data for editing
+  loadDataForEdit() {
+    if (this.pageType  === 'add') { return; }
+    this.loadDataForEditSub = this.beneficiaryService.loadBeneficiaryById(this.pageType).valueChanges()
+      .subscribe(data => {
+        this.startDate  = data.startDate;
+        this.endDate = data.endDate;
+        this.address = data.address;
+        this.name = data.name,
+        this.phoneNumber = data.phoneNumber;
+        this.workType = data.workType;
+        this.completed = data.completed;
+        this.uid = data.uid;
+        this.id = data.id;
+      });
+  }
 
 }

@@ -7,7 +7,7 @@
     <ion-item-sliding #slidingItem>
       <ion-item
         button
-        (click)="openItem(item.$key)"
+        (click)="openItem(item.id)"
         lines="none"
         class="card-backgroud"
       >
@@ -27,7 +27,7 @@
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option
-          (click)="editItem(slidingItem, item.$key)"
+          (click)="editItem(slidingItem, item.id)"
           color="primary"
         >
           <ion-icon name="create" slot="start"></ion-icon> Edit
@@ -35,7 +35,7 @@
       </ion-item-options>
       <ion-item-options side="end">
         <ion-item-option
-          (click)="deleteItem(slidingItem, item.$key)"
+          (click)="deleteItem(slidingItem, item.id)"
           color="danger"
         >
           <ion-icon name="trash" slot="start"></ion-icon> Delete

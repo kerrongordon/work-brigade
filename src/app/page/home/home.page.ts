@@ -15,9 +15,9 @@ export class HomePage implements OnInit {
   searchInput: string;
   loadDataSub: Subscription;
   filterargs: { title: string; };
-  data: Observable<Beneficiary[]>;
 
   search: Boolean = true;
+  data: Observable<Beneficiary[]>;
 
   constructor(
     private menu: MenuController,
@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
   }
 
   loadDate() {
-    return this.data = this.beneficiaryService.loadBeneficiary();
+    return this.data = this.beneficiaryService.LoadAllBeneficiary('uurw5z1Jv4egRl8GKQevBEXBpCp1');
   }
 
   onSearch($event) {

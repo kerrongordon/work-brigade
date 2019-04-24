@@ -14,6 +14,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { registerLocaleData } from '@angular/common';
+import { IonicStorageModule } from '@ionic/storage';
 import localeFrEn from '@angular/common/locales/en';
 import localeFrEnExtra from '@angular/common/locales/extra/en';
 
@@ -23,11 +24,15 @@ registerLocaleData(localeFrEn, localeFrEnExtra);
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot({
+      name: '__brigade',
+      driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),
+    AngularFirestoreModule.enablePersistence(),
+    AngularFireModule.initializeApp(environment.firebase),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

@@ -23,7 +23,7 @@ export class RegisterPage implements OnInit {
   async register() {
     const { email, password, cpassword } = await this;
     if (email.trim() !== '' &&  password.trim() !== '' && cpassword === password) {
-      return this.authService.register(email, password);
+      return this.authService.userRegister(email, password);
     }
   }
 

@@ -1,6 +1,10 @@
 export interface User {
-    uuid?: string;
+    uid?: string;
     email?: string;
     name?: string;
-    Constituency?: string;
+    constituency?: string;
+    timestamp?: string;
+    sex?: string;
+    theme?: string;
+    id?: string;
 }

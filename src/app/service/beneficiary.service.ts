@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Beneficiary } from '../export/beneficiary';
+import { Observable } from 'rxjs/internal/Observable';
 
 
 @Injectable({
@@ -9,23 +10,34 @@ import { Beneficiary } from '../export/beneficiary';
 })
 export class BeneficiaryService {
 
-
   constructor(
     private afs: AngularFirestore,
-  ) {  }
+  ) { }
 
-  registerBeneficiary(data) {
-    return this.afs.collection<Beneficiary>('Beneficiary').add(data);
+
+  // NOTE Load all Beneficiary
+  LoadAllBeneficiary(uid: string): Observable<Beneficiary[]> {
+    return this.afs.collection<Beneficiary>('Beneficiary', ref =>
+      ref.orderBy('startDate').where('uid', '==', uid)
+      ).snapshotChanges()
+      .pipe(map(arr => arr.map(snap => ( { ...snap.payload.doc.data() } ))));
   }
 
-  loadBeneficiary() {
-    const useid: firebase.User = JSON.parse(localStorage.getItem('userdata'));
-    return this.afs.collection<Beneficiary>('Beneficiary', ref => {
-      return ref.orderBy('startDate').where('userUuid', '==', useid.uid);
-    }).snapshotChanges()
-    .pipe(map(arr => arr.map(snap => ( { $key: snap.payload.doc.id, ...snap.payload.doc.data() } ))));
+
+  // NOTE Register Beneficiary
+  async registerBeneficiary(data: Beneficiary) {
+    return await this.afs.collection<Beneficiary>('Beneficiary').add(data)
+      .then(infor => this.addBeneficiaryIdToDatabase(infor));
   }
 
+
+  // NOTE Add Beneficiary Id To Database
+  private async addBeneficiaryIdToDatabase(data: firebase.firestore.DocumentReference) {
+    return await this.loadBeneficiaryById(data.id).update({id: data.id});
+  }
+
+
+  // NOTE Load Beneficiary By Id
   loadBeneficiaryById(id: string) {
     return this.afs.doc<Beneficiary>(`Beneficiary/${id}`);
   }

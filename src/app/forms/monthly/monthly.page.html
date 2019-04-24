@@ -3,8 +3,8 @@
     <ion-button slot="start" fill="clear" (click)="goBack()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-title *ngIf="!(olddata | async)">Add Beneficiary</ion-title>
-    <ion-title *ngIf="(olddata | async)">Edit Beneficiary</ion-title>
+    <ion-title *ngIf="pageType === 'add'">Add Beneficiary</ion-title>
+    <ion-title *ngIf="pageType !== 'add'">Edit Beneficiary</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,14 +12,12 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="6" offset-md="3">
-        <form #form="ngForm" (ngSubmit)="register(form)">
           <ion-item>
             <ion-label position="floating">Beneficiary Name</ion-label>
             <ion-input
               name="name"
               type="text"
-              ngModel
-              [value]="(olddata | async)?.name"
+              [(ngModel)]="name"
             ></ion-input>
           </ion-item>
 
@@ -28,8 +26,7 @@
             <ion-input
               name="address"
               type="text"
-              ngModel
-              [value]="(olddata | async)?.address"
+              [(ngModel)]="address"
             ></ion-input>
           </ion-item>
 
@@ -38,8 +35,7 @@
             <ion-input
               name="phoneNumber"
               type="number"
-              ngModel
-              [value]="(olddata | async)?.phoneNumber"
+              [(ngModel)]="phoneNumber"
             ></ion-input>
           </ion-item>
 
@@ -55,13 +51,12 @@
               [dayNames]="dayNames"
               [dayShortNames]="dayAbbreviation"
               name="startDate"
-              ngModel
-              [value]="(olddata | async)?.startDate"
+              [(ngModel)]="startDate"
             >
             </ion-datetime>
           </ion-item>
 
-          <ion-item *ngIf="pageType != 'add'">
+          <ion-item *ngIf="pageType !== 'add'">
             <ion-label>End Date</ion-label>
             <ion-datetime
               display-format="DDDD MMM D, YYYY"
@@ -70,18 +65,17 @@
               [dayNames]="dayNames"
               [dayShortNames]="dayAbbreviation"
               name="endDate"
-              ngModel
-              [value]="(olddata | async)?.endDate"
+              [(ngModel)]="endDate"
             >
             </ion-datetime>
           </ion-item>
 
-          <ion-item *ngIf="pageType != 'add'">
+          <ion-item *ngIf="pageType !== 'add'">
             <ion-label>Completed</ion-label>
             <ion-checkbox
               slot="start"
               name="completed"
-              [ngModel]="(olddata | async)?.completed"
+              [(ngModel)]="completed"
             ></ion-checkbox>
           </ion-item>
 
@@ -91,8 +85,7 @@
               interface="action-sheet"
               placeholder="Select One"
               name="workType"
-              ngModel
-              [value]="(olddata | async)?.workType"
+              [(ngModel)]="workType"
             >
               <ion-select-option
                 *ngFor="let type of typeOfWork"
@@ -105,12 +98,11 @@
           <div padding></div>
 
           <div padding-vertical>
-            <ion-button size="" type="submit" expand="block">
-              <div *ngIf="!(olddata | async)">Add</div>
-              <div *ngIf="(olddata | async)">Save</div>
+            <ion-button size="" type="submit" expand="block" (click)="addNewBeneficiary()">
+              <div *ngIf="pageType !== 'add'">Save</div>
+              <div *ngIf="pageType === 'add'">Add</div>
             </ion-button>
           </div>
-        </form>
       </ion-col>
     </ion-row>
   </ion-grid>

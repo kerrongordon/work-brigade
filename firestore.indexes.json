@@ -19,7 +19,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "userUuid",
+          "fieldPath": "uid",
           "order": "ASCENDING"
         },
         {
