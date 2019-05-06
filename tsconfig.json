@@ -17,6 +17,12 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@brigade-core/*": ["app/core/*"],
+      "@brigade-shared/*": ["app/shared/*"],
+      "@brigade-modules/*": ["app/modules/*"],
+      "@brigade-layouts/*": ["app/layouts/*"]
+    }
   }
 }

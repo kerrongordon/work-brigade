@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'dailyview/:id', loadChildren: './page/daily/daily.module#DailyPageModule', canActivate: [LoginGuard] },
   { path: 'register', loadChildren: './page/register/register.module#RegisterPageModule' },
   { path: 'day/:id', loadChildren: './page/day/day.module#DayPageModule', canActivate: [LoginGuard] },
+  { path: 'auth', loadChildren: './modules/auth/auth.module#AuthModule' },
 ];
 
 @NgModule({
