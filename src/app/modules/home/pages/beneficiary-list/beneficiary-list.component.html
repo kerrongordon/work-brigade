@@ -1,0 +1,58 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="openMenu()">
+      <ion-icon slot="icon-only" name="menu"></ion-icon>
+    </ion-button>
+    <ion-title>Beneficiary</ion-title>
+    <ion-button slot="end" fill="clear" (click)="search = !search">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-md="6" offset-md="3" size-xl="6" offset-xl="3">
+        <ion-card
+          class="card-backgroud"
+          margin-vertical
+          *ngFor="let item of data"
+        >
+          <ion-item-sliding #slidingItem>
+            <ion-item button lines="none" class="card-backgroud">
+              <ion-icon
+                slot="start"
+                class="cardIcon"
+                [name]="item.completed ? 'checkbox-outline' : 'square-outline'"
+                size="large"
+                [class]="item.completed ? 'cardIcongreen' : 'cardIcon'"
+              ></ion-icon>
+              <ion-label text-wrap>
+                <p class="title">{{ item.name }}</p>
+                <p class="subtitle">{{ item.address }}</p>
+                <p class="subtitle">{{ item.startDate }}</p>
+              </ion-label>
+              <ion-icon name="folder" slot="end" size="large"></ion-icon>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="primary">
+                <ion-icon name="create" slot="start"></ion-icon> Edit
+              </ion-item-option>
+              <ion-item-option color="danger">
+                <ion-icon name="trash" slot="start"></ion-icon> Delete
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

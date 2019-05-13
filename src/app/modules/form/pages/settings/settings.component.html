@@ -1,0 +1,71 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3" size-xl="4" offset-xl="4">
+        <ion-list>
+          <div padding-vertical>
+            <ion-item>
+              <ion-label position="floating">User Name</ion-label>
+              <ion-input type="text" [(ngModel)]="name"></ion-input>
+            </ion-item>
+          </div>
+
+          <ion-item padding-vertical>
+            <ion-label>Sex</ion-label>
+            <ion-select
+              interface="alert"
+              placeholder="Select One"
+              [(ngModel)]="sex"
+            >
+              <ion-select-option
+                *ngFor="let item of ['Male', 'Female', 'Other']"
+                [value]="item"
+                >{{ item }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item padding-vertical>
+            <ion-label>Constituency</ion-label>
+            <ion-select
+              interface="action-sheet"
+              placeholder="Select One"
+              name="constituency"
+              [(ngModel)]="constituency"
+            >
+              <ion-select-option
+                *ngFor="let const of constituencies"
+                [value]="const.name"
+                >{{ const.name }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item padding-vertical>
+            <ion-label>Dark Theme</ion-label>
+            <ion-toggle
+              color="secondary"
+              [(ngModel)]="themeBoolean"
+              (ionChange)="updatTheme()"
+            ></ion-toggle>
+          </ion-item>
+
+          <div padding-vertical>
+            <ion-button (click)="upDateDatabase()" expand="block"
+              >Save</ion-button
+            >
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

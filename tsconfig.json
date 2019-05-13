@@ -19,10 +19,10 @@
       "dom"
     ],
     "paths": {
-      "@brigade-core/*": ["app/core/*"],
-      "@brigade-shared/*": ["app/shared/*"],
-      "@brigade-modules/*": ["app/modules/*"],
-      "@brigade-layouts/*": ["app/layouts/*"]
+      "@brigade-core/*": ["./src/app/core/*"],
+      "@brigade-shared/*": ["./src/app/shared/*"],
+      "@brigade-modules/*": ["./src/app/modules/*"],
+      "@brigade-layouts/*": ["./src/app/layouts/*"]
     }
   }
 }

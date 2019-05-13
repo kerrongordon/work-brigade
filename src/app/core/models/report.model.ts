@@ -1,11 +1,11 @@
-export interface Beneficiary {
+export interface Report {
     completed: Boolean;
-    id?: String | null;
-    uid?: String | null;
-    name: String | null;
-    address: String | null;
-    workType: String | null;
-    endDate?: String | null;
-    startDate: String | null;
-    phoneNumber?: String | null;
+    id?: string | null;
+    uid?: string | null;
+    name: string | null;
+    address: string | null;
+    workType: string | null;
+    endDate?: string | null;
+    startDate: string | null;
+    phoneNumber?: string | null;
 }

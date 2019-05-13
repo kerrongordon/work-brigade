@@ -1,10 +1,10 @@
 export interface User {
-    id: String | null;
-    uid: String | null;
-    sex: String | null;
-    name: String | null;
-    theme: String | null;
-    email: String | null;
-    timestamp: String | null;
-    constituency: String | null;
+    id: string | null;
+    uid: string | null;
+    sex: string | null;
+    name: string | null;
+    theme: string | null;
+    email: string | null;
+    timestamp: string | null;
+    constituency: string | null;
 }

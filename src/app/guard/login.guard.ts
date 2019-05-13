@@ -17,11 +17,13 @@ export class LoginGuard implements CanActivate {
 
   async canActivate() {
 
-    return this.storage.get('islogin')
-      .then(val => {
-        if (val === true) {  return true; }
-        this.navCtrl.navigateRoot('login');
-        return false;
-      });
+    // return this.storage.get('islogin')
+    //   .then(val => {
+    //     if (val === true) {  return true; }
+    //     this.navCtrl.navigateRoot('login');
+    //     return false;
+    //   });
+
+    return true;
   }
 }

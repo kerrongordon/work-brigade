@@ -1,11 +1,11 @@
 export interface Daily {
-    date: String | null;
-    $key: String | null;
+    date: string | null;
+    $key: string | null;
     accomplished: boolean;
-    monthId: String | null;
-    results: String | null;
-    userUuid: String | null;
-    challenges: String | null;
-    materialuse: String | null;
-    plannedactivities: String | null;
+    monthId: string | null;
+    results: string | null;
+    userUuid: string | null;
+    challenges: string | null;
+    materialuse: string | null;
+    plannedactivities: string | null;
 }

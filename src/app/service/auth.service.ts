@@ -93,6 +93,11 @@ export class AuthService {
   }
 
 
+  async sendPasswordResetEmail(email: string) {
+    return await this.afAuth.auth.sendPasswordResetEmail(email);
+  }
+
+
   // NOTE create user database from Register
   private async createUserDatabse(data: auth.UserCredential) {
     const { user } = await data;

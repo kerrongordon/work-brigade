@@ -22,6 +22,16 @@
   p {
     color: var(--ion-color-light);
   }
+
+  .title {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+}
+
+.card-space {
+  padding: 16px;
+  line-height: 1.4em;
 }
 
 .hide {

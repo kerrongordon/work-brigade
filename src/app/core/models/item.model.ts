@@ -1,4 +1,4 @@
 export interface Item {
-    name: String;
-    abbreviation: String;
+    name: string;
+    abbreviation: string;
 }

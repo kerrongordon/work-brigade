@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegiterComponent } from './pages/regiter/regiter.component';
+import { LoginComponent, PasswordRestEmailComponent, RegiterComponent } from './pages';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' },
   { path: '', children: [
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegiterComponent }
+    { path: 'register', component: RegiterComponent },
+    { path: 'passwordrestemail', component: PasswordRestEmailComponent }
   ] }
 ];
 
