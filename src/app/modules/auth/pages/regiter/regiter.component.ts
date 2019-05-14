@@ -58,7 +58,7 @@ export class RegiterComponent implements OnInit {
     await this.presentLoadingAnimation('Signing In...');
     return this._authService.signInWithEmailAndPassword(this.email, this.password)
       .then(() => this.LoadingAnimation.dismiss())
-      .then(() => this._navController.navigateRoot('form/settings'))
+      .then(() => this._navController.navigateRoot(['form/settings', 'isnewuser']))
       .then(() => { this.email = ''; this.password = ''; })
       .catch(error => this.messageToast(error.message));
   }

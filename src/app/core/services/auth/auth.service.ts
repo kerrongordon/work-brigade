@@ -11,7 +11,10 @@ export class AuthService {
   constructor(
     private _angularFirestore: AngularFirestore,
     private _angularFireAuth: AngularFireAuth
-  ) { }
+  ) { 
+
+    console.log('test');
+  }
 
 
   async signInWithEmailAndPassword(email: string, password: string) {
@@ -33,6 +36,10 @@ export class AuthService {
 
   async getUserUidInCollecttion(uid: string) {
     return await this._angularFirestore.collection<User>('users', ref => ref.where('uid', '==', uid)).valueChanges();
+  }
+
+  async signOutUser() {
+    return await this._angularFireAuth.auth.signOut();
   }
 
 }

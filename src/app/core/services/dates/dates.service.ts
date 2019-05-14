@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { months, Month } from 'src/app/export/months';
-import { Day, days } from 'src/app/export/days';
+import { months, days } from '@brigade-core/items';
+import { Item } from '@brigade-core/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatesService {
 
-  private months: Month[] = months;
-  private days: Day[] = days;
+  private months: Item[] = months;
+  private days: Item[] = days;
 
   constructor() { }
 

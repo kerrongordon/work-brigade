@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Platform, MenuController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthService } from './service/auth.service';
-import { ThemeService } from './service/theme.service';
 import { Storage } from '@ionic/storage';
+import { AuthService, ThemeService } from '@brigade-core/services';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
+  themeDarkOrLight: string;
+  themeBoolean = false;
 
   constructor(
     private platform: Platform,
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
     private authService: AuthService,
     private menu: MenuController,
     private navCtrl: NavController,
-    private themeService: ThemeService,
+    private _themeService: ThemeService,
   ) {
     this.initializeApp();
   }
@@ -34,18 +35,25 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storage.get('theme').then(val => {
-      this.themeService.setTheme(val);
-    });
+    this.updatTheme();
+  }
+
+  async updatTheme() {
+    const data = await this.storage.get('user');
+    this.themeBoolean = data.theme === 'light' ? false : true;
+    this.themeDarkOrLight = this.themeBoolean ? 'dark' : 'light';
+    return this._themeService.setTheme(this.themeDarkOrLight);
   }
 
   async setting() {
-    await this.navCtrl.navigateForward('settings');
+    await this.navCtrl.navigateForward(['form/settings', 'edit']);
     return await this.menu.close();
   }
 
   async logout() {
-    await this.authService.userSignOut();
+    await this.authService.signOutUser();
+    this.navCtrl.navigateRoot('auth');
+    this.storage.set('user', null);
     return this.menu.close();
   }
 

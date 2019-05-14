@@ -5,7 +5,7 @@ import { AddBeneficiaryComponent, EditBeneficiaryComponent, AddDailyComponent, E
 const routes: Routes = [
   { path: '', children: [
     { path: 'adddaily', component: AddDailyComponent },
-    { path: 'settings', component: SettingsComponent },
+    { path: 'settings/:type', component: SettingsComponent },
     { path: 'editdaily', component: EditDailyComponent },
     { path: 'addbeneficiary', component: AddBeneficiaryComponent },
     { path: 'editbeneficiary', component: EditBeneficiaryComponent },

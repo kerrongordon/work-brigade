@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { Report } from '@brigade-core/models';
 
 @Component({
@@ -41,7 +41,8 @@ export class BeneficiaryListComponent implements OnInit {
   ];
 
   constructor(
-    private menuController: MenuController
+    private _navController: NavController,
+    private _menuController: MenuController,
   ) { }
 
   ngOnInit() {
@@ -49,7 +50,11 @@ export class BeneficiaryListComponent implements OnInit {
   }
 
   openMenu() {
-    return this.menuController.toggle('mainmenu');
+    return this._menuController.toggle('mainmenu');
+  }
+
+  async addbeneficiary() {
+    return await this._navController.navigateForward('form/addbeneficiary');
   }
 
 }
