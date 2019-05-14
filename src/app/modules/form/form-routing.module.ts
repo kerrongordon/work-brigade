@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AddBeneficiaryComponent, EditBeneficiaryComponent, AddDailyComponent, EditDailyComponent, SettingsComponent } from './pages';
 
 const routes: Routes = [
   { path: '', children: [
-    { path: 'adddaily', component: AddDailyComponent },
-    { path: 'settings/:type', component: SettingsComponent },
-    { path: 'editdaily', component: EditDailyComponent },
-    { path: 'addbeneficiary', component: AddBeneficiaryComponent },
-    { path: 'editbeneficiary', component: EditBeneficiaryComponent },
+    { path: 'adddaily', loadChildren: './pages/add-daily/add-daily.module#AddDailyModule' },
+    { path: 'settings/:type', loadChildren: './pages/settings/settings.module#SettingsModule' },
+    { path: 'editdaily', loadChildren: './pages/edit-daily/edit-daily.module#EditDailyModule' },
+    { path: 'addbeneficiary', loadChildren: './pages/add-beneficiary/add-beneficiary.module#AddBeneficiaryModule' },
+    { path: 'editbeneficiary', loadChildren: './pages/edit-beneficiary/edit-beneficiary.module#EditBeneficiaryModule' },
   ] }
 ];
 

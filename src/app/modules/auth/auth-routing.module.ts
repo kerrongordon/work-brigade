@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent, PasswordRestEmailComponent, RegiterComponent } from './pages';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login' },
   { path: '', children: [
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegiterComponent },
-    { path: 'passwordrestemail', component: PasswordRestEmailComponent }
+    { path: 'login', loadChildren: './pages/login/login.module#LoginModule' },
+    { path: 'register', loadChildren: './pages/regiter/regiter.module#RegiterModule' },
+    { path: 'passwordrestemail', loadChildren: './pages/password-rest-email/password-rest-email.module#PasswordRestEmailModule' }
   ] }
 ];
 

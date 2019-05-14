@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BeneficiaryDetailComponent, BeneficiaryListComponent } from './pages';
 
 const routes: Routes = [
   { path: '', redirectTo: 'list' },
   { path: '', children: [
-    { path: 'list', component: BeneficiaryListComponent },
-    { path: 'detail', component: BeneficiaryDetailComponent }
+    { path: 'list', loadChildren: './pages/beneficiary-list/beneficiary-list.module#BeneficiaryListModule' },
+    { path: 'detail', loadChildren: './pages/beneficiary-detail/beneficiary-detail.module#BeneficiaryDetailModule' }
   ] }
 ];
 
