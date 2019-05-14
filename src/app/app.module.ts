@@ -33,7 +33,7 @@ registerLocaleData(localeFrEn, localeFrEnExtra);
     }),
     AngularFirestoreModule.enablePersistence(),
     AngularFireModule.initializeApp(environment.firebase),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,
@@ -42,4 +42,4 @@ registerLocaleData(localeFrEn, localeFrEnExtra);
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
