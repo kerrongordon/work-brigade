@@ -11,10 +11,7 @@ export class AuthService {
   constructor(
     private _angularFirestore: AngularFirestore,
     private _angularFireAuth: AngularFireAuth
-  ) { 
-
-    console.log('test');
-  }
+  ) {  }
 
 
   async signInWithEmailAndPassword(email: string, password: string) {

@@ -26,8 +26,8 @@ export class BeneficiaryListComponent implements OnInit {
   }
 
   async loadData() {
-    const user: User = await this._storage.get('user');
-    return this.data = this._reportService.loadUserReport(user.uid);
+    return await this._storage.get('user')
+      .then(user => this.data = this._reportService.loadUserReport(user.uid));
   }
 
   openMenu() {

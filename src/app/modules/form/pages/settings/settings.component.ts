@@ -26,7 +26,8 @@ export class SettingsComponent implements OnInit {
   themeBoolean = false;
   constituencies = constituencies;
   themeDarkOrLight: string;
-  pageType: boolean;
+  pageType: string;
+  // pageType: boolean;
 
   constructor(
     private _storage: Storage,
@@ -43,8 +44,8 @@ export class SettingsComponent implements OnInit {
   }
 
   async getPageType() {
-    const pageType = await this._activatedRoute.snapshot.paramMap.get('type');
-    return pageType === 'isnewuser' ? this.pageType = true : this.pageType = false;
+    this.pageType = await this._activatedRoute.snapshot.paramMap.get('type');
+    // return pageType === 'isnewuser' ? this.pageType = true : this.pageType = false;
   }
 
   async loadData() {
@@ -90,17 +91,19 @@ export class SettingsComponent implements OnInit {
       constituency: this.constituency
     };
 
-    this._authService.getUserById(this.id).update(data)
+    await this._authService.getUserById(this.id).update(data)
       .then(() => this._storage.set('user', data));
 
     return this.changeRoute();
   }
 
   async changeRoute() {
-    if (this.pageType) {
-      this._navController.navigateRoot('beneficiary');
-    } else {
-      this._navController.pop();
+    if (this.pageType === 'isnewuser') {
+      return this._navController.navigateRoot('beneficiary/list');
+    }
+
+    if (this.pageType === 'edit') {
+      return this._navController.back();
     }
   }
 

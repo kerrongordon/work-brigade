@@ -40,6 +40,9 @@ export class AppComponent implements OnInit {
 
   async updatTheme() {
     const data = await this.storage.get('user');
+    if (data === null) {
+      return this._themeService.setTheme('light');
+    }
     this.themeBoolean = data.theme === 'light' ? false : true;
     this.themeDarkOrLight = this.themeBoolean ? 'dark' : 'light';
     return this._themeService.setTheme(this.themeDarkOrLight);

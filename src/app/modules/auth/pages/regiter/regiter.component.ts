@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '@brigade-core/services';
 import { User } from '@brigade-core/models';
+import { Storage } from '@ionic/storage';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
 
 @Component({
@@ -17,6 +18,7 @@ export class RegiterComponent implements OnInit {
   LoadingAnimation: HTMLIonLoadingElement;
 
   constructor(
+    private _storage: Storage,
     private _authService: AuthService,
     private _navController: NavController,
     private _toastController: ToastController,
@@ -57,10 +59,21 @@ export class RegiterComponent implements OnInit {
   private async login() {
     await this.presentLoadingAnimation('Signing In...');
     return this._authService.signInWithEmailAndPassword(this.email, this.password)
+      .then(data => this.saveToloaclStorage(data))
       .then(() => this.LoadingAnimation.dismiss())
-      .then(() => this._navController.navigateRoot(['form/settings', 'isnewuser']))
       .then(() => { this.email = ''; this.password = ''; })
       .catch(error => this.messageToast(error.message));
+  }
+
+  private async saveToloaclStorage(auth: firebase.auth.UserCredential) {
+    const { uid } = await auth.user;
+    return await this._authService.getUserUidInCollecttion(uid)
+      .then(data => data.subscribe(sub => this.addUserIdToLocalStorage(sub)));
+  }
+
+  private async addUserIdToLocalStorage(data: User[]) {
+    await this._storage.set('user', data[0]);
+    return this._navController.navigateRoot(['form/settings', 'isnewuser']);
   }
 
   private async addUserIdToDabase(doc: firebase.firestore.DocumentReference) {

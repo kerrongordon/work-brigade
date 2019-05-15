@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs/internal/Subscription';
 import { Storage } from '@ionic/storage';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '@brigade-core/services';
@@ -16,7 +15,6 @@ export class LoginComponent implements OnInit {
   email: '' | null;
   password: '' | null;
   LoadingAnimation: HTMLIonLoadingElement;
-  userSubData: Subscription;
 
   constructor(
     private _storage: Storage,
@@ -39,8 +37,7 @@ export class LoginComponent implements OnInit {
 
   async canSignin(data: firebase.auth.UserCredential) {
     await this.getUserIdFormDatabase(data);
-    return await this._navController.navigateRoot('beneficiary')
-      .then(() => this.LoadingAnimation.dismiss());
+    return this.LoadingAnimation.dismiss();
   }
 
   async messageToast(message: string) {
@@ -55,12 +52,12 @@ export class LoginComponent implements OnInit {
   private async getUserIdFormDatabase(auth: firebase.auth.UserCredential) {
     const { uid } = await auth.user;
     return await this._authService.getUserUidInCollecttion(uid)
-      .then(data => this.userSubData = data.subscribe(sub => this.addUserIdToLocalStorage(sub)));
+      .then(data => data.subscribe(sub => this.addUserIdToLocalStorage(sub)));
   }
 
   private async addUserIdToLocalStorage(data: User[]) {
-    return await this._storage.set('user', data[0])
-      .then(() => this.userSubData.unsubscribe());
+    await this._storage.set('user', data[0]);
+    return this._navController.navigateRoot('beneficiary');
   }
 
 }
