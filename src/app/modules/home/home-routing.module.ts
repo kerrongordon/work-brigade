@@ -5,7 +5,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'list' },
   { path: '', children: [
     { path: 'list', loadChildren: './pages/beneficiary-list/beneficiary-list.module#BeneficiaryListModule' },
-    { path: 'detail', loadChildren: './pages/beneficiary-detail/beneficiary-detail.module#BeneficiaryDetailModule' }
+    { path: 'detail/:id', loadChildren: './pages/beneficiary-detail/beneficiary-detail.module#BeneficiaryDetailModule' }
   ] }
 ];
 

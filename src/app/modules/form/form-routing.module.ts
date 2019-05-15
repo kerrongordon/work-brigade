@@ -7,7 +7,7 @@ const routes: Routes = [
     { path: 'settings/:type', loadChildren: './pages/settings/settings.module#SettingsModule' },
     { path: 'editdaily', loadChildren: './pages/edit-daily/edit-daily.module#EditDailyModule' },
     { path: 'addbeneficiary', loadChildren: './pages/add-beneficiary/add-beneficiary.module#AddBeneficiaryModule' },
-    { path: 'editbeneficiary', loadChildren: './pages/edit-beneficiary/edit-beneficiary.module#EditBeneficiaryModule' },
+    { path: 'editbeneficiary/:id', loadChildren: './pages/edit-beneficiary/edit-beneficiary.module#EditBeneficiaryModule' },
   ] }
 ];
 

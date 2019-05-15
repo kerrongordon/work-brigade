@@ -15,7 +15,7 @@
       ]
     },
     {
-      "collectionGroup": "Beneficiary",
+      "collectionGroup": "Report",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -24,7 +24,7 @@
         },
         {
           "fieldPath": "startDate",
-          "order": "ASCENDING"
+          "order": "DESCENDING"
         }
       ]
     }

@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Report } from '@brigade-core/models';
 
 @Component({
   selector: 'app-detail-list',
@@ -6,10 +7,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./detail-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DetailListComponent implements OnInit {
+export class DetailListComponent {
 
-  constructor() { }
+  @Input() data: Report[];
+  @Output() open = new EventEmitter();
 
-  ngOnInit() {}
+  openItem(id: string) {
+    return this.open.emit(id);
+  }
 
 }

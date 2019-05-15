@@ -1,1 +1,15 @@
-<app-detail-header></app-detail-header>
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="goBack()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title text-center>Daily Report</ion-title>
+    <ion-button slot="end" fill="clear" (click)="editBenef()">
+      <ion-icon name="create"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <app-detail-header [data]="data"></app-detail-header>
+</ion-content>

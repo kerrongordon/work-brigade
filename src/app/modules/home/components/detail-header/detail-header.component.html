@@ -1,4 +1,4 @@
-<ng-container *ngIf="expression; else elseTemplate">
+<ng-container *ngIf="(data | async) as item; else elseTemplate">
   <ion-grid>
     <ion-row>
       <ion-col
@@ -11,16 +11,16 @@
       >
         <ion-card class="maincard">
           <div padding>
-            <h3>Kerron Gordon</h3>
-            <p>New House</p>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.workType }}</p>
           </div>
 
           <ion-card-content>
-            <p><b>Address:</b> River Sallee</p>
-            <p><b>Contact:</b> 423329823823</p>
+            <p><b>Address:</b> {{ item.address }}</p>
+            <p><b>Contact:</b> {{ item.phoneNumber }}</p>
             <!-- <p><b>Constituency:</b> {{ consti }}</p> -->
-            <p><b>Date Project Started:</b> Apr 9, 2019</p>
-            <p><b>Date Project Ended:</b> Apr 9, 2019</p>
+            <p><b>Date Project Started:</b> {{ item.startDate | date: 'fullDate' }}</p>
+            <p *ngIf="item.endDate"><b>Date Project Ended:</b> {{ item.endDate | date: 'fullDate' }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

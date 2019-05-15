@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Report } from '@brigade-core/models';
 
 @Component({
   selector: 'app-detail-header',
@@ -7,6 +8,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailHeaderComponent implements OnInit {
+
+  @Input() data: Report;
 
   constructor() { }
 
