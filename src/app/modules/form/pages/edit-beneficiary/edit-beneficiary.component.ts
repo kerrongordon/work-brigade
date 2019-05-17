@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { typeOfWork } from '@brigade-core/items';
 import { DatesService, ReportService } from '@brigade-core/services';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Report } from '@brigade-core/models';
 
 @Component({
@@ -13,17 +13,12 @@ import { Report } from '@brigade-core/models';
 })
 export class EditBeneficiaryComponent implements OnInit, OnDestroy {
 
-  name = '';
-  address = '';
-  phoneNumber = '';
-  startDate = '';
-  endDate = '';
-  workType = '';
-  completed: Boolean;
   dayNames: string[];
   monthNames: string[];
   dayAbbreviation: string[];
   MonthAbbreviation: string[];
+
+  data: Report;
 
   typeOfWork = typeOfWork;
 
@@ -55,42 +50,22 @@ export class EditBeneficiaryComponent implements OnInit, OnDestroy {
 
   loaddata(id: string) {
     return this.datasub = this._reportService.loadReportByIdWithSub(id)
-      .subscribe(data => {
-        this.isSaveing = false;
-        this.name = data.name;
-        this.address = data.address;
-        this.phoneNumber = data.phoneNumber;
-        this.startDate = data.startDate;
-        this.endDate = data.endDate;
-        this.workType = data.workType;
-        this.completed = data.completed;
-      });
+      .subscribe(data => { this.isSaveing = false; this.data = { ...data }; });
   }
 
   async editBeneficiary() {
 
     if (
-      this.name.trim() === '' ||
-      this.address.trim() === '' ||
-      this.startDate.trim() === '' ||
-      this.workType.trim() === ''
+      this.data.name.trim() === '' ||
+      this.data.address.trim() === '' ||
+      this.data.startDate.trim() === '' ||
+      this.data.workType.trim() === ''
       ) {
         return this.presentToast('Please fill the from...');
       }
 
     this.isSaveing = true;
-
-    const data: Report = {
-      name: this.name,
-      address: this.address,
-      phoneNumber: this.phoneNumber,
-      startDate: this.startDate,
-      endDate: this.endDate,
-      workType: this.workType,
-      completed: this.completed,
-    };
-
-    await this._reportService.loadReportById(this.id).update(data);
+    await this._reportService.loadReportById(this.id).update(this.data);
     this.isSaveing = false;
     return this.goBack();
 
