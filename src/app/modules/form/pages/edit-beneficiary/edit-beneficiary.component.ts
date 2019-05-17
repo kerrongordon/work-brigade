@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { typeOfWork } from '@brigade-core/items';
 import { DatesService, ReportService } from '@brigade-core/services';
@@ -41,8 +41,7 @@ export class EditBeneficiaryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isSaveing = true;
-    this.getRouteId()
-      .then(() => this.loaddata());
+    this.getRouteId();
     this.dayNames = this._datesService.getDayName();
     this.monthNames = this._datesService.getMonthName();
     this.dayAbbreviation = this._datesService.getDayAbbreviation();
@@ -50,11 +49,12 @@ export class EditBeneficiaryComponent implements OnInit, OnDestroy {
   }
 
   async getRouteId() {
-    return this.id = await this._activatedRoute.snapshot.paramMap.get('id');
+    this.id = await this._activatedRoute.snapshot.paramMap.get('id');
+    return this.loaddata(this.id);
   }
 
-  loaddata() {
-    return this.datasub = this._reportService.loadReportById(this.id).valueChanges()
+  loaddata(id: string) {
+    return this.datasub = this._reportService.loadReportByIdWithSub(id)
       .subscribe(data => {
         this.isSaveing = false;
         this.name = data.name;

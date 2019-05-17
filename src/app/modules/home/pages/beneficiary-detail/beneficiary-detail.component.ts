@@ -30,11 +30,11 @@ export class BeneficiaryDetailComponent implements OnInit {
   }
 
   loadData() {
-    return this.data = this._reportService.loadReportById(this.id).valueChanges();
+    return this.data = this._reportService.loadReportByIdWithSub(this.id);
   }
 
-  async editBenef() {
-    return await this._navController.navigateForward(['form/editbeneficiary', this.id]);
+  async editBenef(id: string) {
+    return await this._navController.navigateForward(['form/editbeneficiary', id]);
   }
 
   goBack() {

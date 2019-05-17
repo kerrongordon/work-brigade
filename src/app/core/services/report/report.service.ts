@@ -28,4 +28,8 @@ export class ReportService {
   loadReportById(id: string) {
     return this.afs.doc<Report>(`Report/${id}`);
   }
+
+  loadReportByIdWithSub(id: string) {
+    return this.afs.doc<Report>(`Report/${id}`).valueChanges();
+  }
 }
