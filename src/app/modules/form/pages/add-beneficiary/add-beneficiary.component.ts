@@ -13,15 +13,18 @@ import { Storage } from '@ionic/storage';
 })
 export class AddBeneficiaryComponent implements OnInit {
 
-  name = '';
-  address = '';
-  phoneNumber = '';
-  startDate = '';
-  workType = '';
   dayNames: string[];
   monthNames: string[];
   dayAbbreviation: string[];
   MonthAbbreviation: string[];
+
+  data: Report = {
+    name: '',
+    address: '',
+    phoneNumber: '',
+    startDate: '',
+    workType: '',
+  };
 
   typeOfWork = typeOfWork;
   user: User;
@@ -51,29 +54,16 @@ export class AddBeneficiaryComponent implements OnInit {
   async addNewBeneficiary() {
 
     if (
-      this.name.trim() === '' ||
-      this.address.trim() === '' ||
-      this.startDate.trim() === '' ||
-      this.workType.trim() === ''
+      this.data.name.trim() === '' ||
+      this.data.address.trim() === '' ||
+      this.data.startDate.trim() === '' ||
+      this.data.workType.trim() === ''
       ) {
         return this.presentToast('Please fill the from...');
       }
 
     this.isSaveing = true;
-
-    const data: Report = await {
-      completed: false,
-      id: null,
-      uid: this.user.uid,
-      name: this.name,
-      address: this.address,
-      workType: this.workType,
-      endDate: null,
-      startDate: this.startDate,
-      phoneNumber: this.phoneNumber,
-    };
-
-    await this._reportService.addNewReport(data);
+    await this._reportService.addNewReport({...this.data, uid: this.user.uid});
     this.isSaveing = false;
     return this._navController.back();
 

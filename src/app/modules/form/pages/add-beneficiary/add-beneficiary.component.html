@@ -16,7 +16,7 @@
             <ion-label position="floating">Beneficiary Name</ion-label>
             <ion-input
               type="text"
-              [(ngModel)]="name"
+              [(ngModel)]="data.name"
             ></ion-input>
           </ion-item>
 
@@ -24,7 +24,7 @@
             <ion-label position="floating">Address</ion-label>
             <ion-input
               type="text"
-              [(ngModel)]="address"
+              [(ngModel)]="data.address"
             ></ion-input>
           </ion-item>
 
@@ -32,7 +32,7 @@
             <ion-label position="floating">Phone Number</ion-label>
             <ion-input
               type="number"
-              [(ngModel)]="phoneNumber"
+              [(ngModel)]="data.phoneNumber"
             ></ion-input>
           </ion-item>
 
@@ -47,7 +47,7 @@
               [monthShortNames]="MonthAbbreviation"
               [dayNames]="dayNames"
               [dayShortNames]="dayAbbreviation"
-              [(ngModel)]="startDate"
+              [(ngModel)]="data.startDate"
             >
             </ion-datetime>
           </ion-item>
@@ -57,7 +57,7 @@
             <ion-select
               interface="action-sheet"
               placeholder="Select One"
-              [(ngModel)]="workType"
+              [(ngModel)]="data.workType"
             >
               <ion-select-option
                 *ngFor="let type of typeOfWork"
